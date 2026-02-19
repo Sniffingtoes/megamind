@@ -7,136 +7,189 @@
     <style>
         :root {
             --bg: #ffffff;
-            --text: #1a1a1a;
-            --subtext: #666;
-            --border: #eeeeee;
-            --toggle-bg: #e2e2e2;
+            --text: #0a0a0a;
+            --subtext: #666666;
+            --border: #e5e5e5;
+            --toggle-bg: #f0f0f0;
+            --accent: #000000;
         }
 
         [data-theme="dark"] {
-            --bg: #0f0f0f;
-            --text: #f0f0f0;
-            --subtext: #888;
-            --border: #222;
-            --toggle-bg: #333;
+            --bg: #050505;
+            --text: #ffffff;
+            --subtext: #a1a1a1;
+            --border: #1a1a1a;
+            --toggle-bg: #1a1a1a;
+            --accent: #ffffff;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
             background: var(--bg);
+            color: var(--text);
             margin: 0;
-            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            transition: background 0.5s ease;
+            overflow-x: hidden;
         }
 
         header {
+            padding: 0 1.5rem;
             border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-            animation: fadeInUp 0.5s ease-out forwards;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 1000;
         }
 
         nav {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
+            height: 64px;
         }
 
         .menu {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .menu-item {
-            text-decoration: none;
-            color: var(--subtext);
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: color 0.2s;
+            color: var(--subtext);
             cursor: pointer;
-            padding: 5px 0;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
             position: relative;
         }
 
-        .menu-item:hover, .menu-item.active {
+        .menu-item.active {
             color: var(--text);
         }
 
-        .menu-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 20px;
             height: 2px;
             background: var(--text);
+            transition: 0.3s;
         }
 
-        .switch-wrapper {
+        .controls {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1.5rem;
         }
 
-        .switch { position: relative; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--toggle-bg);
-            transition: .3s; border-radius: 20px;
+        .switch {
+            position: relative;
+            width: 38px;
+            height: 20px;
         }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: var(--toggle-bg);
+            transition: 0.4s;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
         .slider:before {
-            position: absolute; content: "";
-            height: 14px; width: 14px; left: 3px; bottom: 3px;
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 2px;
+            bottom: 2px;
             background-color: var(--text);
-            transition: .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             border-radius: 50%;
         }
-        input:checked + .slider:before { transform: translateX(20px); }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
 
         main {
             flex: 1;
+            position: relative;
             max-width: 800px;
             margin: 0 auto;
-            padding: 4rem 2rem;
             width: 100%;
+            padding: 4rem 2rem;
+            box-sizing: border-box;
         }
 
         .tab-content {
             display: none;
-            animation: fadeInUp 0.4s ease-out forwards;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .tab-content.active {
             display: block;
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        .test-card {
+        .card {
+            background: var(--toggle-bg);
             border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
+            padding: 2rem;
             margin-top: 2rem;
-            background: rgba(128, 128, 128, 0.03);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            
+            .menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 250px;
+                height: 100vh;
+                background: var(--bg);
+                flex-direction: column;
+                padding: 80px 2rem;
+                transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                border-left: 1px solid var(--border);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            }
+
+            .menu.open { right: 0; }
+            
+            .menu-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+            .menu-toggle.open span:nth-child(2) { opacity: 0; }
+            .menu-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
         }
 
         footer {
             padding: 2rem;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--subtext);
             border-top: 1px solid var(--border);
             text-align: center;
+            letter-spacing: 0.1em;
         }
     </style>
 </head>
@@ -144,11 +197,18 @@
 
     <header>
         <nav>
-            <div class="menu">
-                <a class="menu-item active" data-tab="home">Home</a>
-                <a class="menu-item" data-tab="test">Test Environment</a>
+            <div class="menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="switch-wrapper">
+
+            <div class="menu" id="navMenu">
+                <div class="menu-item active" data-tab="home">INDEX</div>
+                <div class="menu-item" data-tab="test">LABS</div>
+            </div>
+
+            <div class="controls">
                 <label class="switch">
                     <input type="checkbox" id="themeCheckbox">
                     <span class="slider"></span>
@@ -159,37 +219,64 @@
 
     <main>
         <section id="home" class="tab-content active">
-            <h1>Environment Overview</h1>
-            <p>Access system modules via the primary navigation menu.</p>
+            <h1>Project Root</h1>
+            <p>Environment optimized for local state verification.</p>
         </section>
 
         <section id="test" class="tab-content">
-            <h1>Test Environment</h1>
-            <p>Verification of secondary view rendering.</p>
-            <div class="test-card">
-                <strong>Status:</strong> Operational<br>
-                <strong>Latency:</strong> <span id="latency">--</span>ms
+            <h1>Diagnostic Labs</h1>
+            <div class="card">
+                <strong>LATENCY:</strong> <span id="latency">--</span>ms<br>
+                <strong>KERNEL:</strong> 1.0.9-B
             </div>
         </section>
     </main>
 
     <footer>
-        8829-X // 2026.02
+        BUILD_REF: 2026.FEB.19
     </footer>
 
     <script>
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
         const tabs = document.querySelectorAll('.menu-item');
         const contents = document.querySelectorAll('.tab-content');
 
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('open');
+            navMenu.classList.toggle('open');
+        });
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                const target = tab.getAttribute('data-tab');
+                const targetId = tab.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetId);
+
+                if (targetContent.classList.contains('active')) return;
+
                 tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
                 tab.classList.add('active');
-                document.getElementById(target).classList.add('active');
-                if(target === 'test') {
-                    document.getElementById('latency').innerText = Math.floor(Math.random() * 20) + 5;
+                
+                navMenu.classList.remove('open');
+                mobileToggle.classList.remove('open');
+
+                contents.forEach(c => {
+                    c.style.opacity = '0';
+                    c.style.transform = 'translateX(-10px)';
+                    setTimeout(() => {
+                        c.classList.remove('active');
+                        if (c.id === targetId) {
+                            c.classList.add('active');
+                            setTimeout(() => {
+                                c.style.opacity = '1';
+                                c.style.transform = 'translateX(0)';
+                            }, 50);
+                        }
+                    }, 200);
+                });
+
+                if(targetId === 'test') {
+                    document.getElementById('latency').innerText = Math.floor(Math.random() * 15) + 4;
                 }
             });
         });
