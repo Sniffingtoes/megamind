@@ -32,12 +32,15 @@
             position: relative;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 2rem; }
+        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
 
         .menu-btn {
             background: none; border: 2px solid var(--text); padding: 10px;
-            border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
+            border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
+            transition: 0.2s;
         }
+        .menu-btn:hover { background: var(--text); }
+        .menu-btn:hover span { background: var(--bg); }
         .menu-btn span { width: 18px; height: 2px; background: var(--text); transition: 0.3s; }
 
         .dropdown {
