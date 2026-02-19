@@ -8,12 +8,12 @@
         :root {
             --bg: #ffffff; --text: #050505; --subtext: #555555;
             --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #5865f2;
-            --discord-bg: #ffffff; --msg-hover: #f2f3f5;
+            --discord-bg: #ffffff;
         }
         [data-theme="dark"] {
             --bg: #080808; --text: #ffffff; --subtext: #b5bac1;
             --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #5865f2;
-            --discord-bg: #313338; --msg-hover: #2e3035;
+            --discord-bg: #313338;
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: background 0.4s ease; overflow-x: hidden; }
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
@@ -34,16 +34,14 @@
         .chat-header { padding: 15px 20px; border-bottom: 1px solid var(--border); font-weight: 700; display: flex; align-items: center; gap: 10px; color: var(--text); font-size: 1rem; }
         .chat-header span { color: var(--subtext); font-weight: 400; font-size: 0.85rem; }
         .message { display: flex; padding: 12px 20px; gap: 15px; }
-        .pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-        .pfp.blank { background: #4e5058; }
+        .pfp-hidden { width: 40px; height: 40px; border-radius: 50%; background: #4e5058; flex-shrink: 0; }
         .msg-content { display: flex; flex-direction: column; }
         .msg-info { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
         .username { font-weight: 600; font-size: 1rem; color: var(--text); }
         .timestamp { font-size: 0.7rem; color: var(--subtext); }
         .text { font-size: 0.95rem; line-height: 1.375; color: var(--text); white-space: pre-wrap; }
-        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; cursor: help; transition: 0.2s; }
+        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; }
         [data-theme="dark"] .redacted { background: #fff; color: #fff; }
-        .redacted:hover { background: transparent !important; color: inherit !important; }
         footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
     </style>
 </head>
@@ -68,7 +66,7 @@
             <strong># classified-logs</strong> <span>| strictly confidential info regarding subject: sharky</span>
         </div>
         <div class="message">
-            <img src="sharkypfp.png" class="pfp" alt="sh8rky">
+            <div class="pfp-hidden"></div>
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username" style="color: #3b82f6;">sh8rky</span>
@@ -78,7 +76,7 @@
             </div>
         </div>
         <div class="message">
-            <div class="pfp blank"></div> 
+            <div class="pfp-hidden"></div> 
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username"></span>
@@ -88,7 +86,7 @@
             </div>
         </div>
         <div class="message">
-            <img src="sharkypfp.png" class="pfp" alt="sh8rky">
+            <div class="pfp-hidden"></div>
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username" style="color: #3b82f6;">sh8rky</span>
