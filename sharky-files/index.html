@@ -10,11 +10,13 @@
             --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #5865f2;
             --discord-bg: #ffffff;
             --pag-bg: #1a1a1a; --pag-text: #ffffff; --pag-active: #5865f2;
+            --img-box: #f2f3f5;
         }
         [data-theme="dark"] {
             --bg: #080808; --text: #ffffff; --subtext: #b5bac1;
             --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #5865f2;
             --discord-bg: #313338;
+            --img-box: #2b2d31;
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: background 0.4s ease; overflow-x: hidden; }
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
@@ -59,6 +61,25 @@
             flex-direction: column;
         }
 
+        /* Fake Image Box Styling */
+        .fake-image {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-top: 8px;
+            padding: 20px;
+            max-width: 400px;
+            min-height: 200px;
+            color: #000000; /* Text inside image is always black for realism */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Consolas', monospace;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
         .chat-content::-webkit-scrollbar { width: 8px; }
         .chat-content::-webkit-scrollbar-track { background: transparent; }
         .chat-content::-webkit-scrollbar-thumb { background: #2b2d31; border-radius: 10px; }
@@ -78,7 +99,6 @@
         .message.compact .pfp, .message.compact .msg-info { display: none; }
         .message.compact .msg-content { margin-left: 55px; }
 
-        /* Pagination Styling */
         .pagination { 
             display: flex; 
             justify-content: center; 
@@ -101,7 +121,7 @@
             min-width: 40px;
         }
         .pag-btn:hover:not(.disabled) { background: #2a2a2a; }
-        .pag-btn.active { background: var(--pag-active); color: #000; }
+        .pag-btn.active { background: var(--pag-active); color: #ffffff; } /* Updated to Blue with White Text */
         .pag-btn.large { padding: 8px 20px; text-transform: uppercase; }
         .pag-btn.disabled { opacity: 0.3; cursor: not-allowed; }
 
@@ -127,8 +147,7 @@
             <strong># sh8rky files</strong> <span id="page-indicator" style="font-weight: 400; color: var(--subtext); font-size: 0.85rem; margin-left: 5px;">| Page 1</span>
         </div>
         
-        <div class="chat-content" id="chat-box">
-            </div>
+        <div class="chat-content" id="chat-box"></div>
 
         <div class="pagination">
             <button class="pag-btn large" id="prevBtn" onclick="changePage(currentPage - 1)">Prev</button>
@@ -167,48 +186,22 @@
                         <div class="text">because i like to <span class="redacted">****</span> kids</div>
                     </div>
                 </div>
-                <div class="message compact">
-                    <div class="msg-content"><div class="text">they all re<span class="redacted">****</span> anyway</div></div>
-                </div>
-                <div class="message">
-                    <div class="pfp blank"></div> 
-                    <div class="msg-content">
-                        <div class="msg-info"><span class="username">User</span><span class="timestamp">3:15 AM</span></div>
-                        <div class="text">wtf</div>
-                    </div>
-                </div>
+            `,
+            2: `
                 <div class="message">
                     <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                     <div class="msg-content">
-                        <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">4:34 AM</span></div>
-                        <div class="text">im gooning to your pictures rn</div>
-                    </div>
-                </div>
-                <div class="message">
-                    <div class="pfp blank"></div> 
-                    <div class="msg-content">
-                        <div class="msg-info"><span class="username">User</span><span class="timestamp">4:37 AM</span></div>
-                        <div class="text">you are wierd dude</div>
-                    </div>
-                </div>
-                <div class="message">
-                    <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
-                    <div class="msg-content">
-                        <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">4:38 AM</span></div>
-                        <div class="text">stfu n<span class="redacted">****</span></div>
+                        <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">4:10 AM</span></div>
+                        <div class="text">Check out this screenshot I took</div>
+                        <div class="fake-image">
+                            <strong>CONFIDENTIAL_DOC.PNG</strong>
+                            <p style="font-size: 0.8rem; margin-top: 10px;">[ IP ADDRESS: 192.168.1.1 ]<br>LOCATION: REDACTED<br>STATUS: ACTIVE</p>
+                        </div>
                     </div>
                 </div>
             `,
-            // Placeholder pages 2-10
-            2: ``,
-            3: ``,
-            4: ``,
-            5: ``,
-            6: ``,
-            7: ``,
-            8: ``,
-            9: ``,
-            10: ``,
+            3: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="text">Page 3 content...</div></div></div>`,
+            4: ``, 5: ``, 6: ``, 7: ``, 8: ``, 9: ``, 10: ``
         };
 
         function renderPagination() {
@@ -228,19 +221,17 @@
         function changePage(page) {
             if (page < 1 || page > totalPages) return;
             currentPage = page;
-            document.getElementById('chat-box').innerHTML = pageData[currentPage] || `<div class="text">No data available.</div>`;
+            document.getElementById('chat-box').innerHTML = pageData[currentPage] || `<div class="message"><div class="msg-content"><div class="text">No logs found on this page.</div></div></div>`;
             document.getElementById('page-indicator').innerText = `| Page ${currentPage}`;
             document.getElementById('chat-box').scrollTop = 0;
             renderPagination();
         }
 
-        // Dropdown Logic
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
 
-        // Theme Logic
         const themeCheckbox = document.getElementById('themeCheckbox');
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
@@ -252,7 +243,6 @@
             localStorage.setItem('theme', theme);
         });
 
-        // Initial Load
         changePage(1);
     </script>
 </body>
