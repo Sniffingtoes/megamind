@@ -25,6 +25,11 @@
         .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
         
+        .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
+        .theme-pill input { opacity: 0; width: 0; height: 0; }
+        .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
+        input:checked + .knob { transform: translateX(26px); background: var(--accent); }
+
         main { flex: 1; max-width: 800px; margin: 0 auto; padding: 8rem 2rem; }
         h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 2rem; }
         .tos-card { background: var(--toggle-bg); border: 1px solid var(--border); padding: 2.5rem; border-radius: 24px; line-height: 1.6; }
@@ -46,6 +51,10 @@
                     <a href="./">Terms</a>
                 </div>
             </div>
+            <label class="theme-pill">
+                <input type="checkbox" id="themeCheckbox">
+                <div class="knob"></div>
+            </label>
         </nav>
     </header>
 
@@ -66,12 +75,29 @@
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
-        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
+        const themeCheckbox = document.getElementById('themeCheckbox');
+
+        // Dropdown Logic
+        menuBtn.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            dropdown.classList.toggle('active'); 
+        });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
         
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
+            themeCheckbox.checked = true;
         }
+
+        themeCheckbox.addEventListener('change', () => {
+            if (themeCheckbox.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
     </script>
 </body>
 </html>
