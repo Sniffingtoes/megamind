@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Alpha - Test Build</title>
+    <title>Project Alpha</title>
     <style>
         :root {
             --bg: #ffffff;
             --text: #1a1a1a;
             --subtext: #666;
-            --accent: #0066cc;
             --border: #eeeeee;
-            --btn-bg: #1a1a1a;
-            --btn-text: #ffffff;
+            --toggle-bg: #e2e2e2;
         }
 
-        /* Dark mode variables */
         [data-theme="dark"] {
-            --bg: #121212;
-            --text: #e0e0e0;
-            --subtext: #a0a0a0;
-            --border: #333333;
-            --btn-bg: #ffffff;
-            --btn-text: #121212;
+            --bg: #0f0f0f;
+            --text: #f0f0f0;
+            --subtext: #888;
+            --border: #222;
+            --toggle-bg: #333;
         }
 
         body {
@@ -31,101 +27,186 @@
             color: var(--text);
             background: var(--bg);
             margin: 0;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        nav {
-            padding: 1.5rem 2rem;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
             border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        nav {
+            max-width: 1000px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 70px;
         }
 
-        .toggle-btn {
-            background: none;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        .menu {
+            display: flex;
+            gap: 2rem;
         }
+
+        .menu-item {
+            text-decoration: none;
+            color: var(--subtext);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            color: var(--text);
+        }
+
+        .menu-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--text);
+        }
+
+        .switch-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch { position: relative; width: 40px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--toggle-bg);
+            transition: .3s; border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute; content: "";
+            height: 14px; width: 14px; left: 3px; bottom: 3px;
+            background-color: var(--text);
+            transition: .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 50%;
+        }
+        input:checked + .slider:before { transform: translateX(20px); }
 
         main {
             flex: 1;
             max-width: 800px;
             margin: 0 auto;
             padding: 4rem 2rem;
+            width: 100%;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.4s ease-out forwards;
         }
 
-        p {
-            font-size: 1.125rem;
-            color: var(--subtext);
-            margin-bottom: 2rem;
+        .tab-content.active {
+            display: block;
         }
 
-        .action-link {
-            display: inline-block;
-            background: var(--btn-bg);
-            color: var(--btn-text);
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
+        .test-card {
+            border: 1px solid var(--border);
+            padding: 1.5rem;
             border-radius: 4px;
-            font-weight: 500;
+            margin-top: 2rem;
+            background: rgba(128, 128, 128, 0.03);
         }
 
         footer {
             padding: 2rem;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: var(--subtext);
             border-top: 1px solid var(--border);
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <strong>Internal Dev Environment</strong>
-        <button id="themeToggle" class="toggle-btn">Toggle Theme</button>
-    </nav>
+    <header>
+        <nav>
+            <div class="menu">
+                <a class="menu-item active" data-tab="home">Home</a>
+                <a class="menu-item" data-tab="test">Test Environment</a>
+            </div>
+            <div class="switch-wrapper">
+                <label class="switch">
+                    <input type="checkbox" id="themeCheckbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </nav>
+    </header>
 
     <main>
-        <h1>System Test Page</h1>
-        <p>This build confirms the implementation of a data-attribute theme switcher. The logic utilizes a root-level attribute to swap CSS variable values globally across the DOM.</p>
-        <a href="#" class="action-link" id="actionBtn">Execute Function</a>
+        <section id="home" class="tab-content active">
+            <h1>Environment Overview</h1>
+            <p>Access system modules via the primary navigation menu.</p>
+        </section>
+
+        <section id="test" class="tab-content">
+            <h1>Test Environment</h1>
+            <p>Verification of secondary view rendering.</p>
+            <div class="test-card">
+                <strong>Status:</strong> Operational<br>
+                <strong>Latency:</strong> <span id="latency">--</span>ms
+            </div>
+        </section>
     </main>
 
     <footer>
-        Build v1.0.5 — 2026
+        8829-X // 2026.02
     </footer>
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
+        const tabs = document.querySelectorAll('.menu-item');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+                if(target === 'test') {
+                    document.getElementById('latency').innerText = Math.floor(Math.random() * 20) + 5;
+                }
+            });
+        });
+
+        const checkbox = document.getElementById('themeCheckbox');
         const htmlElement = document.documentElement;
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            htmlElement.setAttribute('data-theme', newTheme);
-        });
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            checkbox.checked = true;
+        }
 
-        document.getElementById('actionBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Function executed.');
+        checkbox.addEventListener('change', () => {
+            const theme = checkbox.checked ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
         });
     </script>
-
 </body>
 </html>
