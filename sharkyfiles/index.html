@@ -5,16 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Megamind | Sharky Files</title>
     <style>
-        :root {
-            --bg: #ffffff; --text: #050505; --subtext: #555555;
-            --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #2563eb;
-            --redacted: #000000;
-        }
-        [data-theme="dark"] {
-            --bg: #080808; --text: #ffffff; --subtext: #999999;
-            --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6;
-            --redacted: #ffffff;
-        }
+        :root { --bg: #ffffff; --text: #050505; --subtext: #555555; --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #2563eb; }
+        [data-theme="dark"] { --bg: #080808; --text: #ffffff; --subtext: #999999; --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.4s ease; }
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
         nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
@@ -26,22 +18,16 @@
         .dropdown a { padding: 12px 16px; text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 600; border-radius: 6px; }
         .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
-        
         .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
-
         main { flex: 1; max-width: 800px; margin: 0 auto; padding: 8rem 2rem; width: 100%; box-sizing: border-box; }
         .status-bar { display: inline-block; padding: 4px 12px; border: 1px solid #ff4444; color: #ff4444; border-radius: 4px; font-weight: 800; font-size: 0.7rem; margin-bottom: 1rem; }
-        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.04em; margin: 0 0 1rem 0; }
-        
+        h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 1rem; }
         .file-entry { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
-        .file-entry h3 { margin: 0 0 0.5rem 0; font-family: 'Courier New', monospace; font-size: 1.2rem; }
-        .redacted { background: var(--text); color: var(--text); padding: 0 4px; cursor: help; }
+        .redacted { background: var(--text); color: var(--text); padding: 0 4px; cursor: help; transition: 0.2s; }
         .redacted:hover { background: transparent; }
-        
-        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
     </style>
 </head>
 <body>
@@ -60,43 +46,20 @@
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
         </nav>
     </header>
-
     <main>
         <div class="status-bar">CONFIDENTIAL // EYES ONLY</div>
         <h1>Sharky Files</h1>
-        <p style="color: var(--subtext); margin-bottom: 3rem;">Investigation into the anomalous entity known as "Sharky".</p>
-
-        <div class="file-entry">
-            <h3>LOG_001.txt</h3>
-            <p>Subject was spotted at <span class="redacted">McDonalds</span> eating a <span class="redacted">Raw Filet-O-Fish</span>. When questioned, subject simply stated "The water is fine."</p>
-        </div>
-
-        <div class="file-entry">
-            <h3>LOG_002.txt</h3>
-            <p>Intelligence reports suggest Sharky is responsible for the <span class="redacted">2024 Great Cracker Heist</span>. Subject remains at large.</p>
-        </div>
-
-        <div class="file-entry">
-            <h3>LOG_003.txt</h3>
-            <p>DEBUNKED: Sharky is NOT <span class="redacted">three penguins in a trench coat</span>. It is confirmed he is <span class="redacted">four penguins in a trench coat</span>.</p>
-        </div>
+        <div class="file-entry"><p>Subject was spotted at <span class="redacted">McDonalds</span> eating a <span class="redacted">Raw Filet-O-Fish</span>.</p></div>
+        <div class="file-entry"><p>Intelligence reports suggest Sharky is responsible for the <span class="redacted">2024 Great Cracker Heist</span>.</p></div>
+        <div class="file-entry"><p>DEBUNKED: Sharky is NOT <span class="redacted">three penguins in a trench coat</span>. He is <span class="redacted">four</span>.</p></div>
     </main>
-
-    <footer>DATABASE ACCESS LOGGED: 2026-XX-XX</footer>
-
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
         const themeCheckbox = document.getElementById('themeCheckbox');
-
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeCheckbox.checked = true;
-        }
-
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeCheckbox.checked = true; }
         themeCheckbox.addEventListener('change', () => {
             const theme = themeCheckbox.checked ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', theme);
