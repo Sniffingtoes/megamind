@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megamind</title>
+    <style>
+        :root {
+            --bg: #ffffff; --text: #050505; --subtext: #555555;
+            --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #2563eb;
+        }
+        [data-theme="dark"] {
+            --bg: #080808; --text: #ffffff; --subtext: #999999;
+            --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg); color: var(--text);
+            margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+            transition: background 0.4s ease; overflow-x: hidden;
+        }
+
+        header {
+            padding: 0 2rem; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; background: var(--bg); z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px; margin: 0 auto; height: 80px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative;
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+
+        .menu-btn {
+            background: none; border: 2px solid var(--text); padding: 10px;
+            border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
+            transition: 0.2s;
+        }
+        .menu-btn:hover { background: var(--text); }
+        .menu-btn:hover span { background: var(--bg); }
+        .menu-btn span { width: 18px; height: 2px; background: var(--text); transition: 0.3s; }
+
+        .dropdown {
+            position: absolute; top: 75px; left: 0; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 12px; width: 180px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; flex-direction: column;
+            padding: 8px; z-index: 2000; animation: fadeIn 0.2s ease;
+        }
+        .dropdown.active { display: flex; }
+        .dropdown a {
+            padding: 12px 16px; text-decoration: none; color: var(--text);
+            font-size: 0.9rem; font-weight: 600; border-radius: 6px;
+        }
+        .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
+
+        .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
+
+        .theme-pill {
+            display: flex; align-items: center; background: var(--toggle-bg);
+            border: 1px solid var(--border); padding: 5px; border-radius: 30px;
+            cursor: pointer; width: 60px;
+        }
+        .theme-pill input { opacity: 0; width: 0; height: 0; }
+        .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        input:checked + .knob { transform: translateX(26px); background: var(--accent); }
+
+        main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 10rem 2rem; box-sizing: border-box; animation: slideUp 0.6s ease; }
+        h1 { font-size: 5rem; font-weight: 900; letter-spacing: -0.06em; margin: 0; line-height: 0.9; }
+        .description { font-size: 1.5rem; color: var(--subtext); margin-top: 1rem; }
+
+        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; letter-spacing: 2px; color: var(--subtext); }
+        .heart { color: var(--accent); display: inline-block; animation: pulse 1.5s infinite; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-left">
+                <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+                <a href="/" class="brand">Megamind</a>
+                <div class="dropdown" id="menuDropdown">
+                    <a href="/">Home</a>
+                    <a href="/games">Games</a>
+                </div>
+            </div>
+            <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Home</h1>
+        <p class="description">hello</p>
+    </main>
+
+    <footer>2026, ALL RIGHTS RESERVED &bull; MADE WITH <span class="heart">&lt;3</span></footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdown = document.getElementById('menuDropdown');
+        const themeCheckbox = document.getElementById('themeCheckbox');
+
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
+        window.addEventListener('click', () => dropdown.classList.remove('active'));
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeCheckbox.checked = true;
+        }
+
+        themeCheckbox.addEventListener('change', () => {
+            const theme = themeCheckbox.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        });
+    </script>
+</body>
+</html>
