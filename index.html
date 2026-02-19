@@ -3,43 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Alpha</title>
+    <title>Megamind OS</title>
     <style>
         :root {
             --bg: #ffffff;
-            --text: #0a0a0a;
-            --subtext: #666666;
-            --border: #e5e5e5;
-            --toggle-bg: #f0f0f0;
-            --accent: #6366f1;
+            --text: #050505;
+            --subtext: #555555;
+            --border: #e0e0e0;
+            --toggle-bg: #f5f5f5;
+            --accent: #2563eb;
             --card-bg: #ffffff;
-            --btn-hover: #f9fafb;
+            --btn-hover: #f0f0f0;
         }
 
         [data-theme="dark"] {
-            --bg: #050505;
+            --bg: #080808;
             --text: #ffffff;
-            --subtext: #a1a1a1;
-            --border: #1a1a1a;
+            --subtext: #999999;
+            --border: #1e1e1e;
             --toggle-bg: #1a1a1a;
-            --accent: #818cf8;
-            --card-bg: #0d0d0d;
-            --btn-hover: #111111;
+            --accent: #3b82f6;
+            --card-bg: #111111;
+            --btn-hover: #181818;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
             margin: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background 0.5s ease;
+            transition: background 0.4s ease;
         }
 
         header {
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
@@ -53,46 +53,48 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 72px;
+            height: 80px;
         }
 
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .menu-btn {
             background: none;
-            border: 1px solid var(--border);
-            padding: 10px;
-            border-radius: 8px;
+            border: 2px solid var(--text);
+            padding: 12px;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            transition: all 0.2s ease;
+            gap: 5px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .menu-btn:hover {
-            background: var(--btn-hover);
-            border-color: var(--accent);
+            background: var(--text);
+        }
+
+        .menu-btn:hover span {
+            background: var(--bg);
         }
 
         .menu-btn span {
-            width: 20px;
+            width: 22px;
             height: 2px;
             background: var(--text);
-            border-radius: 2px;
+            border-radius: 1px;
+            transition: 0.2s;
         }
 
-        .tab-indicator {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-            padding: 0.5rem 1rem;
-            background: var(--toggle-bg);
-            border-radius: 6px;
+        .brand {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .theme-pill {
@@ -100,26 +102,21 @@
             align-items: center;
             background: var(--toggle-bg);
             border: 1px solid var(--border);
-            padding: 4px;
-            border-radius: 20px;
+            padding: 5px;
+            border-radius: 30px;
             cursor: pointer;
-            width: 56px;
+            width: 60px;
             position: relative;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .theme-pill:hover {
-            border-color: var(--accent);
         }
 
         .theme-pill input { opacity: 0; width: 0; height: 0; }
 
         .knob {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             background: var(--text);
             border-radius: 50%;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         input:checked + .knob {
@@ -129,76 +126,83 @@
 
         main {
             flex: 1;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             width: 100%;
-            padding: 6rem 2rem;
+            padding: 8rem 2rem;
             box-sizing: border-box;
-            animation: fadeIn 0.6s ease-out;
+            animation: slideUp 0.7s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            margin: 0 0 1.5rem 0;
-            line-height: 1;
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            margin: 0 0 2rem 0;
+            line-height: 0.9;
         }
 
-        .interactive-panel {
+        .content-block {
             background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-top: 3rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            transition: transform 0.3s ease;
+            border-left: 4px solid var(--text);
+            padding: 3rem;
+            margin-top: 4rem;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.05);
         }
 
-        .interactive-panel:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--toggle-bg);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
         }
 
-        .btn-action {
+        .btn-core {
             background: var(--text);
             color: var(--bg);
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: 0.3s;
+            margin-top: 2rem;
         }
 
-        .btn-action:hover {
-            opacity: 0.8;
-            transform: scale(1.02);
+        .btn-core:hover {
+            letter-spacing: 0.1em;
+            opacity: 0.9;
         }
 
         footer {
-            padding: 4rem 2rem;
-            font-size: 0.9rem;
+            padding: 5rem 2rem;
+            font-size: 0.8rem;
             color: var(--subtext);
             text-align: center;
             border-top: 1px solid var(--border);
-            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
         }
 
         .heart {
-            color: #ff4b4b;
+            color: var(--accent);
             display: inline-block;
-            animation: beat 1.2s infinite alternate cubic-bezier(0.4, 0, 0.6, 1);
+            animation: pulse 1.5s infinite;
         }
 
-        @keyframes beat {
-            from { transform: scale(1); }
-            to { transform: scale(1.15); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -212,7 +216,7 @@
                     <span></span>
                     <span></span>
                 </button>
-                <div class="tab-indicator">Home</div>
+                <div class="brand">Megamind</div>
             </div>
             
             <label class="theme-pill">
@@ -223,13 +227,14 @@
     </header>
 
     <main>
-        <h1>System Alpha.</h1>
-        <p style="font-size: 1.25rem; color: var(--subtext);">A localized environment for interface testing and core logic verification.</p>
+        <div class="status-badge">NODE_ESTABLISHED // 2026</div>
+        <h1>Intelligence evolved.</h1>
+        <p style="font-size: 1.5rem; color: var(--subtext); max-width: 600px;">Override established. This interface is now running on the Megamind core framework.</p>
         
-        <div class="interactive-panel">
-            <h3 style="margin-top: 0;">Initial Sequence</h3>
-            <p>Deploying verified components to the primary viewport. No external dependencies detected.</p>
-            <button class="btn-action" onclick="alert('Diagnostic sequence initiated.')">Run Task</button>
+        <div class="content-block">
+            <h2 style="margin-top: 0; font-size: 2rem;">Neural Link</h2>
+            <p>Processing local data streams and optimizing viewport performance for high-density environments.</p>
+            <button class="btn-core" onclick="alert('Accessing core data...')">Initiate Uplink</button>
         </div>
     </main>
 
