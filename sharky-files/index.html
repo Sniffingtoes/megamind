@@ -6,40 +6,51 @@
     <title>Megamind | Sharky Files</title>
     <style>
         :root {
+            /* Main Page Colors (still toggleable) */
             --bg: #ffffff; --text: #050505; --subtext: #555555;
             --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #5865f2;
-            --discord-bg: #ffffff;
+            
+            /* FIXING DISCORD WINDOW TO GRAY PERMANENTLY */
+            --discord-bg: #313338; /* Standard Discord Gray */
+            --discord-text: #ffffff;
+            --discord-subtext: #b5bac1;
+            --discord-border: #1e1e1e;
+
+            /* Pagination */
             --pag-bg: #1a1a1a; --pag-text: #ffffff; --pag-active: #5865f2;
             --call-icon: #3ba55c;
         }
+
         [data-theme="dark"] {
             --bg: #080808; --text: #ffffff; --subtext: #b5bac1;
             --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #5865f2;
-            --discord-bg: #313338;
         }
+
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: background 0.4s ease; overflow-x: hidden; }
+        
+        /* Header and Nav Styles */
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
         nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .menu-btn { background: none; border: 2px solid var(--text); padding: 10px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
         .menu-btn span { width: 18px; height: 2px; background: var(--text); }
-        .dropdown { position: absolute; top: 75px; left: 0; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; flex-direction: column; padding: 8px; z-index: 2000; }
-        .dropdown.active { display: flex; }
-        .dropdown a { padding: 12px 16px; text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 600; border-radius: 6px; }
-        .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
+        
+        /* Theme Toggle Pill */
         .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
-        
+
+        /* The Discord Window - Always Gray */
         main { 
             max-width: 900px; 
             margin: 2rem auto; 
             background: var(--discord-bg); 
+            color: var(--discord-text);
             border-radius: 8px; 
-            border: 1px solid var(--border); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--discord-border); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             height: 700px;
@@ -47,7 +58,7 @@
 
         .chat-header { 
             padding: 15px 20px; 
-            border-bottom: 1px solid var(--border); 
+            border-bottom: 1px solid var(--discord-border); 
             font-weight: 700; 
             flex-shrink: 0; 
         }
@@ -60,22 +71,21 @@
             flex-direction: column;
         }
 
-        /* Fake Image Box */
+        /* Fake Image Box (White inside the gray window) */
         .fake-image {
             background: #ffffff;
-            border: 1px solid #e3e5e8;
             border-radius: 8px;
             margin-top: 8px;
             padding: 25px;
             max-width: 450px;
-            min-height: 250px;
+            min-height: 200px;
             color: #000000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Consolas', monospace;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         /* Call System Message Style */
@@ -86,27 +96,23 @@
             gap: 12px;
             font-size: 0.95rem;
         }
-        .call-icon {
-            color: var(--call-icon);
-            font-size: 1.2rem;
-            width: 40px;
-            text-align: center;
-        }
-        .call-text { color: var(--subtext); }
-        .call-user { font-weight: 600; color: var(--text); margin-right: 4px; }
-        .call-time { font-size: 0.75rem; color: var(--subtext); margin-left: 8px; }
+        .call-icon { color: var(--call-icon); font-size: 1.2rem; width: 40px; text-align: center; }
+        .call-text { color: var(--discord-subtext); }
+        .call-user { font-weight: 600; color: #ffffff; margin-right: 4px; }
+        .call-time { font-size: 0.75rem; color: var(--discord-subtext); margin-left: 8px; }
 
+        /* Message Styling inside Gray Window */
         .message { display: flex; padding: 2px 20px; gap: 15px; margin-top: 10px; flex-shrink: 0; }
         .pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .pfp.blank { background: #4e5058; }
         .msg-content { display: flex; flex-direction: column; width: 100%; }
         .msg-info { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
-        .username { font-weight: 600; font-size: 1rem; color: var(--text); }
-        .timestamp { font-size: 0.7rem; color: var(--subtext); }
-        .text { font-size: 0.95rem; line-height: 1.375; color: var(--text); white-space: pre-wrap; }
-        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; }
-        [data-theme="dark"] .redacted { background: #fff; color: #fff; }
+        .username { font-weight: 600; font-size: 1rem; color: #ffffff; }
+        .timestamp { font-size: 0.7rem; color: var(--discord-subtext); }
+        .text { font-size: 0.95rem; line-height: 1.375; color: #dbdee1; white-space: pre-wrap; }
+        .redacted { background: #ffffff; color: #ffffff; padding: 0 4px; border-radius: 3px; user-select: none; }
 
+        /* Pagination Bar */
         .pagination { 
             display: flex; 
             justify-content: center; 
@@ -127,7 +133,7 @@
             font-weight: 700;
             font-size: 0.9rem;
         }
-        .pag-btn.active { background: var(--pag-active); color: #ffffff; }
+        .pag-btn.active { background: var(--pag-active); color: #ffffff; } /* BLUE ACTIVE */
         .pag-btn.large { padding: 8px 20px; text-transform: uppercase; }
         .pag-btn.disabled { opacity: 0.3; cursor: not-allowed; }
     </style>
@@ -138,9 +144,6 @@
             <div class="nav-left">
                 <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
                 <a href="../" class="brand">Megamind</a>
-                <div class="dropdown" id="menuDropdown">
-                    <a href="../">Home</a><a href="../games/">Games</a>
-                </div>
             </div>
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
         </nav>
@@ -148,7 +151,7 @@
 
     <main>
         <div class="chat-header">
-            <strong># sh8rky files</strong> <span id="page-indicator" style="font-weight: 400; color: var(--subtext); font-size: 0.85rem; margin-left: 5px;">| Page 1</span>
+            <strong># sh8rky files</strong> <span id="page-indicator" style="font-weight: 400; color: var(--discord-subtext); font-size: 0.85rem; margin-left: 5px;">| Page 1</span>
         </div>
         <div class="chat-content" id="chat-box"></div>
         <div class="pagination">
@@ -179,18 +182,13 @@
                     <div class="pfp blank"></div> 
                     <div class="msg-content">
                         <div class="msg-info"><span class="username">User</span><span class="timestamp">3:10 AM</span></div>
-                        <div class="text">Look at this doc:</div>
+                        <div class="text">evidence attach:</div>
                         <div class="fake-image">
-                            [ LOG_REPORT_V4.TXT ]
-                            <br><br>
-                            USER_ID: 9928374<br>
-                            STATUS: FLAGGED<br>
-                            REASON: UNUSUAL ACTIVITY
                         </div>
                     </div>
                 </div>
             `,
-            2: `<div class="call-msg"><div class="call-icon">📞</div><div class="call-text"><span class="call-user">sh8rky</span> missed a call from you. <span class="call-time">Today at 4:20 AM</span></div></div>`,
+            2: ``,
             3: ``, 4: ``, 5: ``, 6: ``, 7: ``, 8: ``, 9: ``, 10: ``
         };
 
@@ -211,21 +209,15 @@
         function changePage(page) {
             if (page < 1 || page > totalPages) return;
             currentPage = page;
-            document.getElementById('chat-box').innerHTML = pageData[currentPage] || `<div class="message"><div class="msg-content"><div class="text">No logs found.</div></div></div>`;
+            document.getElementById('chat-box').innerHTML = pageData[currentPage] || `<div class="message"><div class="msg-content"><div class="text">No logs.</div></div></div>`;
             document.getElementById('page-indicator').innerText = `| Page ${currentPage}`;
             document.getElementById('chat-box').scrollTop = 0;
             renderPagination();
         }
 
-        const menuBtn = document.getElementById('menuBtn');
-        const dropdown = document.getElementById('menuDropdown');
-        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
-        window.addEventListener('click', () => dropdown.classList.remove('active'));
-
         const themeCheckbox = document.getElementById('themeCheckbox');
         themeCheckbox.addEventListener('change', () => {
-            const theme = themeCheckbox.checked ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('data-theme', themeCheckbox.checked ? 'dark' : 'light');
         });
 
         changePage(1);
