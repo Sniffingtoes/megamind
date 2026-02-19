@@ -33,16 +33,19 @@
         main { max-width: 800px; margin: 4rem auto; background: var(--discord-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .chat-header { padding: 15px 20px; border-bottom: 1px solid var(--border); font-weight: 700; display: flex; align-items: center; gap: 10px; color: var(--text); font-size: 1rem; }
         .chat-header span { color: var(--subtext); font-weight: 400; font-size: 0.85rem; }
-        .message { display: flex; padding: 12px 20px; gap: 15px; }
+        .message { display: flex; padding: 2px 20px; gap: 15px; margin-top: 10px; }
         .pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .pfp.blank { background: #4e5058; }
-        .msg-content { display: flex; flex-direction: column; }
+        .msg-content { display: flex; flex-direction: column; width: 100%; }
         .msg-info { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
         .username { font-weight: 600; font-size: 1rem; color: var(--text); }
         .timestamp { font-size: 0.7rem; color: var(--subtext); }
         .text { font-size: 0.95rem; line-height: 1.375; color: var(--text); white-space: pre-wrap; }
         .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; pointer-events: none; }
         [data-theme="dark"] .redacted { background: #fff; color: #fff; }
+        .message.compact { margin-top: 0; padding-top: 2px; padding-bottom: 2px; }
+        .message.compact .pfp, .message.compact .msg-info { display: none; }
+        .message.compact .msg-content { margin-left: 55px; }
         footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
     </style>
 </head>
@@ -85,15 +88,12 @@
                 </div>
                 <div class="text">CRAZY</div>
             </div>
-        <div class="message">
-            <div class="pfp blank"></div> 
+        </div>
+        <div class="message compact">
             <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username"></span>
-                    <span class="timestamp">Today at 3:08 AM</span>
-                </div>
                 <div class="text">why would you do that tf</div>
             </div>
+        </div>
     </main>
     <script>
         const menuBtn = document.getElementById('menuBtn');
