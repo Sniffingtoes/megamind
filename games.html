@@ -6,92 +6,59 @@
     <title>Megamind | Games</title>
     <style>
         :root {
-            --bg: #ffffff;
-            --text: #050505;
-            --subtext: #555555;
-            --border: #e0e0e0;
-            --toggle-bg: #f5f5f5;
-            --accent: #2563eb;
-            --overlay: rgba(255, 255, 255, 0.98);
-            --card-hover: #f9f9f9;
+            --bg: #ffffff; --text: #050505; --subtext: #555555;
+            --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #2563eb;
         }
-
         [data-theme="dark"] {
-            --bg: #080808;
-            --text: #ffffff;
-            --subtext: #999999;
-            --border: #1e1e1e;
-            --toggle-bg: #1a1a1a;
-            --accent: #3b82f6;
-            --overlay: rgba(8, 8, 8, 0.98);
-            --card-hover: #121212;
+            --bg: #080808; --text: #ffffff; --subtext: #999999;
+            --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6;
         }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0;
-            transition: background 0.4s ease;
-            overflow-x: hidden;
+            background: var(--bg); color: var(--text);
+            margin: 0; transition: background 0.4s ease;
         }
 
         header {
-            padding: 0 2rem;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: var(--bg);
-            z-index: 1000;
+            padding: 0 2rem; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; background: var(--bg); z-index: 1000;
         }
 
         nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
+            max-width: 1200px; margin: 0 auto; height: 80px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 2rem; }
+        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
 
         .menu-btn {
-            background: none;
-            border: 2px solid var(--text);
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            z-index: 2001;
+            background: none; border: 2px solid var(--text); padding: 10px;
+            border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
         }
+        .menu-btn span { width: 18px; height: 2px; background: var(--text); transition: 0.3s; }
 
-        .menu-btn span { width: 22px; height: 2px; background: var(--text); transition: 0.3s; }
-        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .menu-btn.open span:nth-child(2) { opacity: 0; }
-        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .dropdown {
+            position: absolute; top: 75px; left: 0; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 12px; width: 180px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; flex-direction: column;
+            padding: 8px; z-index: 2000;
+        }
+        .dropdown.active { display: flex; }
+        .dropdown a {
+            padding: 12px 16px; text-decoration: none; color: var(--text);
+            font-size: 0.9rem; font-weight: 600; border-radius: 6px;
+        }
+        .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
 
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
-
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 2000;
-            opacity: 0; visibility: hidden; transition: 0.4s ease;
-        }
-
-        .menu-overlay.active { opacity: 1; visibility: visible; }
-        .menu-links { display: flex; flex-direction: column; gap: 2rem; text-align: center; }
-        .menu-links a { font-size: 3rem; font-weight: 900; text-decoration: none; color: var(--text); }
 
         .theme-pill {
             display: flex; align-items: center; background: var(--toggle-bg);
             border: 1px solid var(--border); padding: 5px; border-radius: 30px;
             cursor: pointer; width: 60px;
         }
-
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
@@ -100,128 +67,83 @@
         h1 { font-size: 4rem; font-weight: 900; letter-spacing: -0.06em; margin-bottom: 0.5rem; }
         .description { font-size: 1.2rem; color: var(--subtext); margin-bottom: 4rem; }
 
-        /* Game Grid */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
         .game-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: 0.3s cubic-bezier(0.2, 0, 0, 1);
-            position: relative;
-            overflow: hidden;
+            background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
+            padding: 1.5rem; cursor: pointer; transition: 0.3s;
         }
+        .game-card:hover { transform: translateY(-5px); border-color: var(--accent); background: var(--toggle-bg); }
+        .game-card h3 { margin: 0; font-size: 1.4rem; font-weight: 800; }
+        .play-tag { display: inline-block; margin-top: 1rem; font-size: 0.75rem; font-weight: 900; color: var(--accent); }
 
-        .game-card:hover {
-            transform: translateY(-10px);
-            background: var(--card-hover);
-            border-color: var(--accent);
-        }
-
-        .game-card h3 { margin: 0; font-size: 1.5rem; font-weight: 800; }
-        .game-card p { color: var(--subtext); font-size: 0.9rem; margin-top: 8px; }
-        .play-tag {
-            display: inline-block; margin-top: 1.5rem;
-            font-size: 0.75rem; font-weight: 900; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 0.1em;
-        }
-
-        /* Game Player Modal */
         .game-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 3000; display: none;
-            flex-direction: column;
+            background: #000; z-index: 3000; display: none; flex-direction: column;
         }
-
-        .modal-header {
-            height: 60px; background: #111; display: flex;
-            align-items: center; justify-content: space-between; padding: 0 20px;
-        }
-
-        .close-game { color: #fff; background: none; border: 1px solid #444; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-
+        .modal-header { height: 50px; background: #111; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .close-game { color: #fff; background: none; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
         #game-frame { border: none; flex-grow: 1; width: 100%; height: 100%; }
 
-        footer { padding: 5rem 2rem; font-size: 0.8rem; color: var(--subtext); text-align: center; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.2em; }
+        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; letter-spacing: 2px; color: var(--subtext); }
     </style>
 </head>
 <body>
-
     <header>
         <nav>
             <div class="nav-left">
                 <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
-                <a href="index.html" class="brand">Megamind</a>
+                <a href="/" class="brand">Megamind</a>
+                <div class="dropdown" id="menuDropdown">
+                    <a href="/">Home</a>
+                    <a href="/games">Games</a>
+                </div>
             </div>
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
         </nav>
     </header>
 
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-links">
-            <a href="index.html">Home</a>
-            <a href="games.html">Games</a>
-        </div>
-    </div>
-
     <main>
         <h1>Games</h1>
-        <p class="description">Select a node to begin simulation.</p>
-
+        <p class="description">Verified compatible nodes.</p>
         <div class="game-grid">
-            <div class="game-card" onclick="openGame('https://neal.fun/infinite-craft/')">
-                <h3>Infinite Craft</h3>
-                <p>Elemental alchemy and discovery.</p>
-                <span class="play-tag">Launch Game &rarr;</span>
-            </div>
             <div class="game-card" onclick="openGame('https://pancakeser.github.io/3/')">
-                <h3>Minecraft</h3>
-                <p>Classic creative build environment.</p>
-                <span class="play-tag">Launch Game &rarr;</span>
+                <h3>Minecraft HTML</h3>
+                <p>Browser-optimized clone.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
             </div>
             <div class="game-card" onclick="openGame('https://slowroads.io/')">
                 <h3>Slow Roads</h3>
-                <p>Infinite procedural driving.</p>
-                <span class="play-tag">Launch Game &rarr;</span>
+                <p>Endless procedural driving.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
             </div>
-            <div class="game-card" onclick="openGame('https://tetris.com/play-tetris')">
-                <h3>Tetris</h3>
-                <p>The original logic puzzle.</p>
-                <span class="play-tag">Launch Game &rarr;</span>
+            <div class="game-card" onclick="openGame('https://slope.io/slope-game')">
+                <h3>Slope</h3>
+                <p>High-speed survival.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
             </div>
         </div>
     </main>
 
     <div class="game-modal" id="gameModal">
         <div class="modal-header">
-            <span style="color: #fff; font-weight: 800; letter-spacing: 1px;" id="active-title">GAME_RUNNING</span>
-            <button class="close-game" onclick="closeGame()">EXIT GAME</button>
+            <span style="color: #fff; font-size: 0.8rem; font-weight: 800;">ACTIVE_SESSION</span>
+            <button class="close-game" onclick="closeGame()">EXIT</button>
         </div>
         <iframe id="game-frame" src=""></iframe>
     </div>
 
-    <footer>2026, All Rights Reserved</footer>
+    <footer>2026, ALL RIGHTS RESERVED</footer>
 
     <script>
         const menuBtn = document.getElementById('menuBtn');
-        const menuOverlay = document.getElementById('menuOverlay');
+        const dropdown = document.getElementById('menuDropdown');
         const themeCheckbox = document.getElementById('themeCheckbox');
         const gameModal = document.getElementById('gameModal');
         const gameFrame = document.getElementById('game-frame');
 
-        // Navigation
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');
-            menuOverlay.classList.toggle('active');
-        });
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
+        window.addEventListener('click', () => dropdown.classList.remove('active'));
 
-        // Theme
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
             themeCheckbox.checked = true;
@@ -233,7 +155,6 @@
             localStorage.setItem('theme', theme);
         });
 
-        // Game Player Logic
         function openGame(url) {
             gameFrame.src = url;
             gameModal.style.display = 'flex';
