@@ -30,7 +30,23 @@
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
-        main { max-width: 800px; margin: 4rem auto; background: var(--discord-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        main { 
+            max-width: 800px; 
+            margin: 4rem auto; 
+            background: var(--discord-bg); 
+            border-radius: 8px; 
+            border: 1px solid var(--border); 
+            overflow-y: auto; 
+            max-height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            padding-bottom: 20px;
+        }
+
+        main::-webkit-scrollbar { width: 8px; }
+        main::-webkit-scrollbar-track { background: transparent; }
+        main::-webkit-scrollbar-thumb { background: #2b2d31; border-radius: 10px; }
+
         .message { display: flex; padding: 2px 20px; gap: 15px; margin-top: 10px; }
         .pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .pfp.blank { background: #4e5058; }
