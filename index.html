@@ -36,7 +36,6 @@
             flex-direction: column;
             min-height: 100vh;
             transition: background 0.5s ease;
-            overflow-x: hidden;
         }
 
         header {
@@ -60,48 +59,40 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .menu-btn {
             background: none;
             border: 1px solid var(--border);
-            padding: 8px;
-            border-radius: 6px;
+            padding: 10px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             gap: 4px;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
 
-        .menu-btn:hover { background: var(--btn-hover); }
+        .menu-btn:hover {
+            background: var(--btn-hover);
+            border-color: var(--accent);
+        }
 
         .menu-btn span {
-            width: 18px;
+            width: 20px;
             height: 2px;
             background: var(--text);
             border-radius: 2px;
         }
 
-        .menu {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .menu-item {
+        .tab-indicator {
             font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--subtext);
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .menu-item:hover, .menu-item.active {
+            font-weight: 600;
             color: var(--text);
-            background: var(--btn-hover);
+            padding: 0.5rem 1rem;
+            background: var(--toggle-bg);
+            border-radius: 6px;
         }
 
         .theme-pill {
@@ -114,10 +105,12 @@
             cursor: pointer;
             width: 56px;
             position: relative;
-            transition: all 0.3s;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .theme-pill:hover { border-color: var(--accent); }
+        .theme-pill:hover {
+            border-color: var(--accent);
+        }
 
         .theme-pill input { opacity: 0; width: 0; height: 0; }
 
@@ -126,84 +119,87 @@
             height: 22px;
             background: var(--text);
             border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        input:checked + .knob { transform: translateX(26px); background: var(--accent); }
+        input:checked + .knob {
+            transform: translateX(26px);
+            background: var(--accent);
+        }
 
         main {
             flex: 1;
             max-width: 800px;
             margin: 0 auto;
             width: 100%;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
             box-sizing: border-box;
+            animation: fadeIn 0.6s ease-out;
         }
 
-        .tab-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            letter-spacing: -0.04em;
-            margin: 0 0 1rem 0;
+            letter-spacing: -0.05em;
+            margin: 0 0 1.5rem 0;
+            line-height: 1;
         }
 
         .interactive-panel {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: transform 0.3s ease;
         }
 
-        .stream-box {
-            background: #000;
-            color: #00ff00;
-            font-family: 'Courier New', monospace;
-            padding: 1rem;
-            border-radius: 6px;
-            height: 120px;
-            overflow-y: hidden;
-            font-size: 0.8rem;
-            margin-top: 1rem;
+        .interactive-panel:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
         }
 
         .btn-action {
-            background: var(--accent);
-            color: white;
+            background: var(--text);
+            color: var(--bg);
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 12px 24px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
         }
 
-        .btn-action:hover { opacity: 0.9; }
+        .btn-action:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
 
         footer {
-            padding: 3rem;
-            font-size: 0.85rem;
+            padding: 4rem 2rem;
+            font-size: 0.9rem;
             color: var(--subtext);
             text-align: center;
             border-top: 1px solid var(--border);
+            font-weight: 500;
         }
 
-        .heart { color: #ff4b4b; display: inline-block; animation: beat 1s infinite alternate; }
-        @keyframes beat { from { transform: scale(1); } to { transform: scale(1.1); } }
+        .heart {
+            color: #ff4b4b;
+            display: inline-block;
+            animation: beat 1.2s infinite alternate cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        @keyframes beat {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
     </style>
 </head>
 <body>
@@ -216,10 +212,7 @@
                     <span></span>
                     <span></span>
                 </button>
-                <div class="menu">
-                    <div class="menu-item active" data-tab="home">Home</div>
-                    <div class="menu-item" data-tab="test">Labs</div>
-                </div>
+                <div class="tab-indicator">Home</div>
             </div>
             
             <label class="theme-pill">
@@ -230,26 +223,14 @@
     </header>
 
     <main>
-        <section id="home" class="tab-content active">
-            <h1>Workspace Alpha.</h1>
-            <p>A minimal test environment built for performance and verification.</p>
-            <div class="interactive-panel">
-                <h3>System Status</h3>
-                <p>Everything is currently functional. No errors detected.</p>
-                <button class="btn-action" onclick="alert('System check complete.')">Run Diagnostics</button>
-            </div>
-        </section>
-
-        <section id="test" class="tab-content">
-            <h1>Live Data Labs</h1>
-            <p>Simulating real-time telemetry logs.</p>
-            <div class="interactive-panel">
-                <button class="btn-action" id="startStream">Connect to Stream</button>
-                <div class="stream-box" id="stream">
-                    > Initialize connection...
-                </div>
-            </div>
-        </section>
+        <h1>System Alpha.</h1>
+        <p style="font-size: 1.25rem; color: var(--subtext);">A localized environment for interface testing and core logic verification.</p>
+        
+        <div class="interactive-panel">
+            <h3 style="margin-top: 0;">Initial Sequence</h3>
+            <p>Deploying verified components to the primary viewport. No external dependencies detected.</p>
+            <button class="btn-action" onclick="alert('Diagnostic sequence initiated.')">Run Task</button>
+        </div>
     </main>
 
     <footer>
@@ -257,44 +238,18 @@
     </footer>
 
     <script>
-        const tabs = document.querySelectorAll('.menu-item');
-        const contents = document.querySelectorAll('.tab-content');
-        const streamBox = document.getElementById('stream');
-        const startBtn = document.getElementById('startStream');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = tab.getAttribute('data-tab');
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                contents.forEach(c => {
-                    c.classList.remove('active');
-                    if(c.id === target) c.classList.add('active');
-                });
-            });
-        });
-
         const checkbox = document.getElementById('themeCheckbox');
+        const htmlElement = document.documentElement;
+
         if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
+            htmlElement.setAttribute('data-theme', 'dark');
             checkbox.checked = true;
         }
 
         checkbox.addEventListener('change', () => {
             const theme = checkbox.checked ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
+            htmlElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-        });
-
-        startBtn.addEventListener('click', () => {
-            startBtn.innerText = "Connected";
-            setInterval(() => {
-                const log = document.createElement('div');
-                log.innerText = `> PKT_RECV: ${Math.random().toString(16).substr(2, 8).toUpperCase()} ... OK`;
-                streamBox.appendChild(log);
-                streamBox.scrollTop = streamBox.scrollHeight;
-            }, 1000);
         });
 
         document.getElementById('mainMenuBtn').addEventListener('click', () => {
