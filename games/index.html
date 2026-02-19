@@ -79,24 +79,19 @@
                 <p>Endless procedural driving.</p>
                 <span class="play-tag">LAUNCH &rarr;</span>
             </div>
-            <div class="game-card" onclick="openGame('https://tov99.github.io/2048/')">
+            <div class="game-card" onclick="openGame('https://gabrielecirulli.github.io/2048/')">
                 <h3>2048</h3>
-                <p>The original math logic puzzle.</p>
+                <p>Official GitHub logic node.</p>
                 <span class="play-tag">LAUNCH &rarr;</span>
             </div>
-            <div class="game-card" onclick="openGame('https://orteil.dashnet.org/cookieclicker/')">
-                <h3>Cookie Clicker</h3>
-                <p>Incremental bakery empire.</p>
+            <div class="game-card" onclick="openGame('https://neave.com/tictactoe/?embed')">
+                <h3>Tic Tac Toe</h3>
+                <p>Classic strategy node.</p>
                 <span class="play-tag">LAUNCH &rarr;</span>
             </div>
-            <div class="game-card" onclick="openGame('https://monkeymart.org/game/retro-bowl/')">
-                <h3>Retro Bowl</h3>
-                <p>8-bit American football manager.</p>
-                <span class="play-tag">LAUNCH &rarr;</span>
-            </div>
-            <div class="game-card" onclick="openGame('https://bitlife-online.io/')">
-                <h3>BitLife</h3>
-                <p>Text-based life simulator.</p>
+            <div class="game-card" onclick="openGame('https://wayou.github.io/t-rex-runner/')">
+                <h3>Dino Run</h3>
+                <p>Offline simulation classic.</p>
                 <span class="play-tag">LAUNCH &rarr;</span>
             </div>
         </div>
@@ -147,9 +142,7 @@
 
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
-                gameModal.requestFullscreen().catch(err => {
-                    alert(`Error: ${err.message}`);
-                });
+                gameModal.requestFullscreen().catch(err => { alert(`Error: ${err.message}`); });
             } else {
                 document.exitFullscreen();
             }
