@@ -37,10 +37,7 @@
         .menu-btn {
             background: none; border: 2px solid var(--text); padding: 10px;
             border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
-            transition: 0.2s;
         }
-        .menu-btn:hover { background: var(--text); }
-        .menu-btn:hover span { background: var(--bg); }
         .menu-btn span { width: 18px; height: 2px; background: var(--text); transition: 0.3s; }
 
         .dropdown {
@@ -84,10 +81,10 @@
         <nav>
             <div class="nav-left">
                 <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
-                <a href="/" class="brand">Megamind</a>
+                <a href="./" class="brand">Megamind</a>
                 <div class="dropdown" id="menuDropdown">
-                    <a href="/">Home</a>
-                    <a href="/games">Games</a>
+                    <a href="./">Home</a>
+                    <a href="./games/">Games</a>
                 </div>
             </div>
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
