@@ -9,14 +9,13 @@
             --bg: #ffffff; --text: #050505; --subtext: #555555;
             --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #5865f2;
             
-            /* FIXED DISCORD WINDOW COLORS */
             --discord-bg: #313338; 
             --discord-text: #ffffff;
             --discord-subtext: #b5bac1;
             --discord-border: #1e1e1e;
 
             --pag-bg: #1a1a1a; --pag-text: #ffffff; --pag-active: #5865f2;
-            --call-icon: #3ba55c;
+            --call-icon: #248046;
         }
 
         [data-theme="dark"] {
@@ -29,7 +28,6 @@
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
         nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         
-        /* Menu & Dropdown Styles */
         .nav-left { display: flex; align-items: center; gap: 1.5rem; position: relative; }
         .menu-btn { background: none; border: 2px solid var(--text); padding: 10px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
         .menu-btn span { width: 18px; height: 2px; background: var(--text); }
@@ -44,13 +42,11 @@
 
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
         
-        /* Theme Toggle */
         .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
 
-        /* Discord Window */
         main { 
             max-width: 900px; margin: 2rem auto; 
             background: var(--discord-bg); color: var(--discord-text);
@@ -70,10 +66,14 @@
         .timestamp { font-size: 0.7rem; color: var(--discord-subtext); }
         .text { font-size: 0.95rem; line-height: 1.375; color: #dbdee1; white-space: pre-wrap; }
         
-        /* Compact Logic */
         .message.compact { margin-top: 0; padding-top: 2px; padding-bottom: 2px; }
         .message.compact .pfp, .message.compact .msg-info { display: none; }
         .message.compact .msg-content { margin-left: 55px; }
+
+        .call-msg { display: flex; align-items: center; padding: 4px 20px; gap: 12px; font-size: 0.95rem; margin-top: 8px; }
+        .call-icon { font-size: 1.1rem; width: 40px; text-align: center; color: var(--call-icon); }
+        .call-user { font-weight: 600; color: #ffffff; }
+        .call-time { font-size: 0.75rem; color: #949ba4; margin-left: 8px; }
 
         .pagination { 
             display: flex; justify-content: center; align-items: center; gap: 8px; 
@@ -121,10 +121,7 @@
             <div class="message">
                 <div class="pfp blank"></div> 
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">Today at 3:08 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">Today at 3:08 AM</span></div>
                     <div class="text">hi</div>
                 </div>
             </div>
@@ -134,40 +131,28 @@
             <div class="message">
                 <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username" style="color: #3b82f6;">sh8rky</span>
-                        <span class="timestamp">Today at 3:08 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">Today at 3:08 AM</span></div>
                     <div class="text">ok</div>
                 </div>
             </div>
             <div class="message">
                 <div class="pfp blank"></div> 
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">Today at 3:09 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">Today at 3:09 AM</span></div>
                     <div class="text">thanks</div>
                 </div>
             </div>
             <div class="message">
                 <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username" style="color: #3b82f6;">sh8rky</span>
-                        <span class="timestamp">Today at 3:10 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">Today at 3:10 AM</span></div>
                     <div class="text">why do you even need secret acc</div>
                 </div>
             </div>
             <div class="message">
                 <div class="pfp blank"></div> 
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">Today at 3:10 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">Today at 3:10 AM</span></div>
                     <div class="text">idk</div>
                 </div>
             </div>
@@ -177,81 +162,54 @@
             <div class="message">
                 <div class="pfp blank"></div>
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">3:13 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">3:13 AM</span></div>
                     <div class="text">look at this</div>
-        
                     <div style="margin-top: 4px;">
-                        <a href="#" style="color: #00a8fc; text-decoration: none; font-size: 0.95rem; font-weight: 500;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
-                            view attachment
-                        </a>
+                        <a href="#" style="color: #00a8fc; text-decoration: none; font-size: 0.95rem; font-weight: 500;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">view attachment</a>
                     </div>
                 </div>
             </div>
             <div class="message">
                 <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username" style="color: #3b82f6;">sh8rky</span>
-                        <span class="timestamp">Today at 3:14 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">Today at 3:14 AM</span></div>
                     <div class="text">hot</div>
                 </div>
             </div>
             <div class="message">
                 <div class="pfp blank"></div> 
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">Today at 3:14 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">Today at 3:14 AM</span></div>
                     <div class="text">you think so🥹</div>
                 </div>
             </div>
             <div class="message">
                 <div class="pfp blank"></div>
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">4:15 AM</span>
-                    </div>
-        
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">4:15 AM</span></div>
                     <div style="margin-top: 4px;">
-                        <a href="#" style="color: #00a8fc; text-decoration: none; font-size: 0.95rem; font-weight: 500;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
-                            view attachment
-                        </a>
+                        <a href="#" style="color: #00a8fc; text-decoration: none; font-size: 0.95rem; font-weight: 500;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">view attachment</a>
                     </div>
                 </div>
             </div>
             <div class="message">
                 <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username" style="color: #3b82f6;">sh8rky</span>
-                        <span class="timestamp">Today at 3:17 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">Today at 3:17 AM</span></div>
                     <div class="text">minor??</div>
                 </div>
             </div>
             <div class="message">
                 <div class="pfp blank"></div> 
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">Today at 3:18 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">Today at 3:18 AM</span></div>
                     <div class="text">yea like me</div>
                 </div>
             </div>
             <div class="message">
                 <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username" style="color: #3b82f6;">sh8rky</span>
-                        <span class="timestamp">Today at 3:18 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username" style="color: #3b82f6;">sh8rky</span><span class="timestamp">Today at 3:18 AM</span></div>
                     <div class="text">really???</div>
                 </div>
             </div>
@@ -261,10 +219,7 @@
             <div class="message">
                 <div class="pfp blank"></div> 
                 <div class="msg-content">
-                    <div class="msg-info">
-                        <span class="username">User</span>
-                        <span class="timestamp">Today at 3:18 AM</span>
-                    </div>
+                    <div class="msg-info"><span class="username">User</span><span class="timestamp">Today at 3:18 AM</span></div>
                     <div class="text">yesss!!</div>
                 </div>
             </div>
@@ -272,15 +227,15 @@
                 <div class="msg-content"><div class="text">call</div></div>
             </div>
             <div class="call-msg">
-                <div class="call-icon" style="color: #248046;">📞</div>
+                <div class="call-icon">📞</div>
                 <div class="call-text">
-                    <span class="call-user" style="font-weight: 600; color: #ffffff;">sh8rky</span> 
+                    <span class="call-user">sh8rky</span> 
                     <span style="color: #dbdee1;">started a call that lasted 42 minutes.</span>
-                    <span class="call-time" style="font-size: 0.75rem; color: #949ba4; margin-left: 8px;">6/27/2025 3:20 AM</span>
+                    <span class="call-time">6/27/2025 3:20 AM</span>
                 </div>
             </div>
             `,
-            2: ``,
+            2: `<div class="message"><div class="text">No logs found on Page 2.</div></div>`,
         };
 
         function renderPagination() {
