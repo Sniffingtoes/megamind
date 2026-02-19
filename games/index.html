@@ -15,7 +15,7 @@
             --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6;
             --card-hover: #121212;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: background 0.4s ease; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: background 0.4s ease; overflow-x: hidden; }
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
         nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
@@ -27,22 +27,25 @@
         .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
         .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
-        .theme-pill input { opacity: 0; }
+        .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
         main { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; }
-        h1 { font-size: 4rem; font-weight: 900; letter-spacing: -0.06em; }
+        h1 { font-size: 4rem; font-weight: 900; letter-spacing: -0.06em; margin-bottom: 0.5rem; }
         .description { font-size: 1.2rem; color: var(--subtext); margin-bottom: 4rem; }
+        
         .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
-        .game-card { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; cursor: pointer; transition: 0.3s; }
-        .game-card:hover { transform: translateY(-5px); border-color: var(--accent); background: var(--card-hover); }
+        .game-card { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; cursor: pointer; transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .game-card:hover { transform: translateY(-8px); border-color: var(--accent); background: var(--card-hover); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         .game-card h3 { margin: 0; font-size: 1.4rem; font-weight: 800; }
-        .play-tag { display: inline-block; margin-top: 1rem; font-size: 0.75rem; font-weight: 900; color: var(--accent); }
+        .game-card p { font-size: 0.9rem; color: var(--subtext); margin: 8px 0 0 0; }
+        .play-tag { display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+
         .game-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 3000; display: none; flex-direction: column; }
         .modal-header { height: 50px; background: #111; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
         .btn-group { display: flex; gap: 10px; }
-        .modal-btn { color: #fff; background: #222; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
-        .modal-btn:hover { background: #333; }
+        .modal-btn { color: #fff; background: #222; border: 1px solid #444; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; font-weight: 800; transition: 0.2s; }
+        .modal-btn:hover { background: #333; border-color: var(--accent); }
         #game-frame { border: none; flex-grow: 1; width: 100%; height: 100%; }
         footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
     </style>
@@ -61,6 +64,7 @@
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
         </nav>
     </header>
+
     <main>
         <h1>Games</h1>
         <p class="description">Active Simulation Nodes.</p>
@@ -70,29 +74,47 @@
                 <p>High-speed gravity survival.</p>
                 <span class="play-tag">LAUNCH &rarr;</span>
             </div>
-            <div class="game-card" onclick="openGame('https://slither.io/')">
-                <h3>Slither.io</h3>
-                <p>The original snake arena.</p>
-                <span class="play-tag">LAUNCH &rarr;</span>
-            </div>
             <div class="game-card" onclick="openGame('https://slowroads.io/')">
                 <h3>Slow Roads</h3>
                 <p>Endless procedural driving.</p>
                 <span class="play-tag">LAUNCH &rarr;</span>
             </div>
+            <div class="game-card" onclick="openGame('https://tov99.github.io/2048/')">
+                <h3>2048</h3>
+                <p>The original math logic puzzle.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
+            </div>
+            <div class="game-card" onclick="openGame('https://orteil.dashnet.org/cookieclicker/')">
+                <h3>Cookie Clicker</h3>
+                <p>Incremental bakery empire.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
+            </div>
+            <div class="game-card" onclick="openGame('https://monkeymart.org/game/retro-bowl/')">
+                <h3>Retro Bowl</h3>
+                <p>8-bit American football manager.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
+            </div>
+            <div class="game-card" onclick="openGame('https://bitlife-online.io/')">
+                <h3>BitLife</h3>
+                <p>Text-based life simulator.</p>
+                <span class="play-tag">LAUNCH &rarr;</span>
+            </div>
         </div>
     </main>
+
     <div class="game-modal" id="gameModal">
         <div class="modal-header">
-            <span style="color: #fff; font-size: 0.8rem; font-weight: 800;">ACTIVE_SESSION</span>
+            <span style="color: #fff; font-size: 0.8rem; font-weight: 800; letter-spacing: 1px;">ACTIVE_SESSION</span>
             <div class="btn-group">
                 <button class="modal-btn" onclick="toggleFullscreen()">FULLSCREEN</button>
-                <button class="modal-btn" style="background: #b91c1c;" onclick="closeGame()">EXIT</button>
+                <button class="modal-btn" style="background: #b91c1c; border-color: #b91c1c;" onclick="closeGame()">EXIT</button>
             </div>
         </div>
         <iframe id="game-frame" src=""></iframe>
     </div>
+
     <footer>2026, ALL RIGHTS RESERVED</footer>
+
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
@@ -126,7 +148,7 @@
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
                 gameModal.requestFullscreen().catch(err => {
-                    alert(`Error attempting to enable full-screen mode: ${err.message}`);
+                    alert(`Error: ${err.message}`);
                 });
             } else {
                 document.exitFullscreen();
