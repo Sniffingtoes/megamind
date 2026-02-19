@@ -34,13 +34,14 @@
         .chat-header { padding: 15px 20px; border-bottom: 1px solid var(--border); font-weight: 700; display: flex; align-items: center; gap: 10px; color: var(--text); font-size: 1rem; }
         .chat-header span { color: var(--subtext); font-weight: 400; font-size: 0.85rem; }
         .message { display: flex; padding: 12px 20px; gap: 15px; }
-        .pfp-hidden { width: 40px; height: 40px; border-radius: 50%; background: #4e5058; flex-shrink: 0; }
+        .pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .pfp.blank { background: #4e5058; }
         .msg-content { display: flex; flex-direction: column; }
         .msg-info { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
         .username { font-weight: 600; font-size: 1rem; color: var(--text); }
         .timestamp { font-size: 0.7rem; color: var(--subtext); }
         .text { font-size: 0.95rem; line-height: 1.375; color: var(--text); white-space: pre-wrap; }
-        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; }
+        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; pointer-events: none; }
         [data-theme="dark"] .redacted { background: #fff; color: #fff; }
         footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
     </style>
@@ -66,7 +67,7 @@
             <strong># classified-logs</strong> <span>| strictly confidential info regarding subject: sharky</span>
         </div>
         <div class="message">
-            <div class="pfp-hidden"></div>
+            <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username" style="color: #3b82f6;">sh8rky</span>
@@ -76,7 +77,7 @@
             </div>
         </div>
         <div class="message">
-            <div class="pfp-hidden"></div> 
+            <div class="pfp blank"></div> 
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username"></span>
@@ -86,7 +87,7 @@
             </div>
         </div>
         <div class="message">
-            <div class="pfp-hidden"></div>
+            <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username" style="color: #3b82f6;">sh8rky</span>
