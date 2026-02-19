@@ -9,6 +9,7 @@
             --bg: #ffffff; --text: #050505; --subtext: #555555;
             --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #5865f2;
             --discord-bg: #ffffff;
+            --pag-bg: #1a1a1a; --pag-text: #ffffff; --pag-active: #ff9900;
         }
         [data-theme="dark"] {
             --bg: #080808; --text: #ffffff; --subtext: #b5bac1;
@@ -32,15 +33,15 @@
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
         
         main { 
-            max-width: 800px; 
-            margin: 4rem auto; 
+            max-width: 900px; 
+            margin: 2rem auto; 
             background: var(--discord-bg); 
             border-radius: 8px; 
             border: 1px solid var(--border); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            height: 600px; /* Fixed height for scrolling */
+            height: 700px;
         }
 
         .chat-header { 
@@ -70,14 +71,41 @@
         .username { font-weight: 600; font-size: 1rem; color: var(--text); }
         .timestamp { font-size: 0.7rem; color: var(--subtext); }
         .text { font-size: 0.95rem; line-height: 1.375; color: var(--text); white-space: pre-wrap; }
-        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; pointer-events: none; }
+        .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; }
         [data-theme="dark"] .redacted { background: #fff; color: #fff; }
         
         .message.compact { margin-top: 0; padding-top: 2px; padding-bottom: 2px; }
         .message.compact .pfp, .message.compact .msg-info { display: none; }
         .message.compact .msg-content { margin-left: 55px; }
-        
-        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
+
+        /* Pagination Styling */
+        .pagination { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 8px; 
+            padding: 15px; 
+            background: #000; 
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .pag-btn { 
+            background: var(--pag-bg); 
+            color: var(--pag-text); 
+            border: none; 
+            padding: 8px 14px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: 700;
+            font-size: 0.9rem;
+            min-width: 40px;
+        }
+        .pag-btn:hover:not(.disabled) { background: #2a2a2a; }
+        .pag-btn.active { background: var(--pag-active); color: #000; }
+        .pag-btn.large { padding: 8px 20px; text-transform: uppercase; }
+        .pag-btn.disabled { opacity: 0.3; cursor: not-allowed; }
+
+        footer { padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--subtext); }
     </style>
 </head>
 <body>
@@ -87,21 +115,35 @@
                 <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
                 <a href="../" class="brand">Megamind</a>
                 <div class="dropdown" id="menuDropdown">
-                    <a href="../">Home</a>
-                    <a href="../games/">Games</a>
-                    <a href="./">Sharky Files</a>
-                    <a href="../terms/">Terms</a>
+                    <a href="../">Home</a><a href="../games/">Games</a><a href="./">Sharky Files</a><a href="../terms/">Terms</a>
                 </div>
             </div>
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
         </nav>
     </header>
+
     <main>
         <div class="chat-header">
-            <strong># sh8rky files</strong> <span style="font-weight: 400; color: var(--subtext); font-size: 0.85rem; margin-left: 5px;">| info regarding subject: sharky</span>
+            <strong># sh8rky files</strong> <span id="page-indicator" style="font-weight: 400; color: var(--subtext); font-size: 0.85rem; margin-left: 5px;">| Page 1</span>
         </div>
-        <div class="chat-content">
-            <div class="message">
+        
+        <div class="chat-content" id="chat-box">
+            </div>
+
+        <div class="pagination">
+            <button class="pag-btn large" id="prevBtn" onclick="changePage(currentPage - 1)">Prev</button>
+            <div id="pageNumbers" style="display:flex; gap:8px;"></div>
+            <button class="pag-btn large" id="nextBtn" onclick="changePage(currentPage + 1)">Next</button>
+        </div>
+    </main>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 10;
+
+        const pageData = {
+            1: `
+                <div class="message">
                 <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
                 <div class="msg-content">
                     <div class="msg-info">
@@ -197,20 +239,54 @@
             <div class="msg-content">
                 <div class="msg-info">
                     <span class="username"></span>
-                    <span class="timestamp">Today at 3:08 AM</span>
+                    <span class="timestamp">Today at 3:46 AM</span>
                 </div>
                 <div class="text">bro stop messaging me</div>
             </div>
-    </main>
-    <script>
+            `,
+            // Placeholder pages 2-10
+            2: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">[LOG_ENCRYPTED] File reference: 0x992. Access denied.</div></div></div>`,
+            3: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 3: Tracking cookies found in sharky_directory.</div></div></div>`,
+            4: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 4: Log of deleted images retrieved from cache.</div></div></div>`,
+            5: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 5: Audio logs corrupted. Attempting recovery...</div></div></div>`,
+            6: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 6: Transaction history for subject "Sharky" flagged.</div></div></div>`,
+            7: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 7: Subject relocated. IP trace active.</div></div></div>`,
+            8: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 8: Internal server error. Please refresh.</div></div></div>`,
+            9: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">Page 9: Discord API metadata dump available.</div></div></div>`,
+            10: `<div class="message"><div class="pfp blank"></div><div class="msg-content"><div class="username">System</div><div class="text">End of logs. No further data on sh8rky found.</div></div></div>`
+        };
+
+        function renderPagination() {
+            const container = document.getElementById('pageNumbers');
+            container.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = `pag-btn ${i === currentPage ? 'active' : ''}`;
+                btn.onclick = () => changePage(i);
+                container.appendChild(btn);
+            }
+            document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 1);
+            document.getElementById('nextBtn').classList.toggle('disabled', currentPage === totalPages);
+        }
+
+        function changePage(page) {
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            document.getElementById('chat-box').innerHTML = pageData[currentPage] || `<div class="text">No data available.</div>`;
+            document.getElementById('page-indicator').innerText = `| Page ${currentPage}`;
+            document.getElementById('chat-box').scrollTop = 0;
+            renderPagination();
+        }
+
+        // Dropdown Logic
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
-        const themeCheckbox = document.getElementById('themeCheckbox');
-        menuBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            dropdown.classList.toggle('active'); 
-        });
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
+
+        // Theme Logic
+        const themeCheckbox = document.getElementById('themeCheckbox');
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
             themeCheckbox.checked = true;
@@ -220,6 +296,9 @@
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
         });
+
+        // Initial Load
+        changePage(1);
     </script>
 </body>
 </html>
