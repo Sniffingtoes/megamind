@@ -12,7 +12,7 @@
             --border: #e0e0e0;
             --toggle-bg: #f5f5f5;
             --accent: #2563eb;
-            --card-bg: #ffffff;
+            --overlay: rgba(255, 255, 255, 0.98);
         }
 
         [data-theme="dark"] {
@@ -22,7 +22,7 @@
             --border: #1e1e1e;
             --toggle-bg: #1a1a1a;
             --accent: #3b82f6;
-            --card-bg: #111111;
+            --overlay: rgba(8, 8, 8, 0.98);
         }
 
         body {
@@ -34,6 +34,7 @@
             flex-direction: column;
             min-height: 100vh;
             transition: background 0.4s ease;
+            overflow-x: hidden;
         }
 
         header {
@@ -69,30 +70,50 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.2s;
+            z-index: 2001;
         }
 
-        .menu-btn:hover {
-            background: var(--text);
+        .menu-btn:hover { background: var(--text); }
+        .menu-btn:hover span { background: var(--bg); }
+        .menu-btn span { width: 22px; height: 2px; background: var(--text); transition: 0.3s; }
+
+        .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-btn.open span:nth-child(2) { opacity: 0; }
+        .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
+
+        /* Fullscreen Overlay Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .menu-btn:hover span {
-            background: var(--bg);
-        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
 
-        .menu-btn span {
-            width: 22px;
-            height: 2px;
-            background: var(--text);
-            border-radius: 1px;
+        .menu-links { display: flex; flex-direction: column; gap: 2rem; text-align: center; }
+        .menu-links a {
+            font-size: 3rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: var(--text);
+            transition: 0.3s;
+            letter-spacing: -0.05em;
         }
-
-        .brand {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
+        .menu-links a:hover { color: var(--accent); transform: scale(1.05); }
 
         .theme-pill {
             display: flex;
@@ -105,71 +126,17 @@
             width: 60px;
             position: relative;
         }
-
         .theme-pill input { opacity: 0; width: 0; height: 0; }
+        .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        input:checked + .knob { transform: translateX(26px); background: var(--accent); }
 
-        .knob {
-            width: 24px;
-            height: 24px;
-            background: var(--text);
-            border-radius: 50%;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
+        main { flex: 1; max-width: 900px; margin: 0 auto; width: 100%; padding: 10rem 2rem; box-sizing: border-box; }
+        h1 { font-size: 5rem; font-weight: 900; letter-spacing: -0.06em; margin: 0 0 1rem 0; line-height: 0.9; }
+        .description { font-size: 1.5rem; color: var(--subtext); }
 
-        input:checked + .knob {
-            transform: translateX(26px);
-            background: var(--accent);
-        }
-
-        main {
-            flex: 1;
-            max-width: 900px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 10rem 2rem;
-            box-sizing: border-box;
-            animation: slideUp 0.7s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            letter-spacing: -0.06em;
-            margin: 0 0 1rem 0;
-            line-height: 0.9;
-        }
-
-        .description {
-            font-size: 1.5rem;
-            color: var(--subtext);
-        }
-
-        footer {
-            padding: 5rem 2rem;
-            font-size: 0.8rem;
-            color: var(--subtext);
-            text-align: center;
-            border-top: 1px solid var(--border);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-
-        .heart {
-            color: var(--accent);
-            display: inline-block;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
+        footer { padding: 5rem 2rem; font-size: 0.8rem; color: var(--subtext); text-align: center; border-top: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.2em; }
+        .heart { color: var(--accent); display: inline-block; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
     </style>
 </head>
 <body>
@@ -177,20 +144,26 @@
     <header>
         <nav>
             <div class="nav-left">
-                <button class="menu-btn" id="mainMenuBtn">
+                <button class="menu-btn" id="menuBtn">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <div class="brand">Megamind</div>
+                <a href="index.html" class="brand">Megamind</a>
             </div>
-            
             <label class="theme-pill">
                 <input type="checkbox" id="themeCheckbox">
                 <div class="knob"></div>
             </label>
         </nav>
     </header>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+        </div>
+    </div>
 
     <main>
         <h1>Home</h1>
@@ -202,22 +175,25 @@
     </footer>
 
     <script>
-        const checkbox = document.getElementById('themeCheckbox');
-        const htmlElement = document.documentElement;
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const themeCheckbox = document.getElementById('themeCheckbox');
 
-        if (localStorage.getItem('theme') === 'dark') {
-            htmlElement.setAttribute('data-theme', 'dark');
-            checkbox.checked = true;
-        }
-
-        checkbox.addEventListener('change', () => {
-            const theme = checkbox.checked ? 'dark' : 'light';
-            htmlElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = menuOverlay.classList.contains('active') ? 'hidden' : 'auto';
         });
 
-        document.getElementById('mainMenuBtn').addEventListener('click', () => {
-            alert('Main navigation overlay requested.');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeCheckbox.checked = true;
+        }
+
+        themeCheckbox.addEventListener('change', () => {
+            const theme = themeCheckbox.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
         });
     </script>
 </body>
