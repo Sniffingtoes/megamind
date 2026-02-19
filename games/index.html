@@ -16,21 +16,23 @@
             --card-hover: #121212;
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: background 0.4s ease; overflow-x: hidden; }
-        header { padding: 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
-        nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+        header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
+        nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .menu-btn { background: none; border: 2px solid var(--text); padding: 10px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
         .menu-btn span { width: 18px; height: 2px; background: var(--text); }
-        .dropdown { position: absolute; top: 75px; left: 2rem; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; flex-direction: column; padding: 8px; z-index: 2000; }
+        .dropdown { position: absolute; top: 75px; left: 0; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; flex-direction: column; padding: 8px; z-index: 2000; }
         .dropdown.active { display: flex; }
         .dropdown a { padding: 12px 16px; text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 600; border-radius: 6px; }
         .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
+        
+        /* Theme Toggle */
         .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
-        
+
         main { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; }
         h1 { font-size: 4rem; font-weight: 900; letter-spacing: -0.06em; margin-bottom: 0.5rem; }
         .description { font-size: 1.2rem; color: var(--subtext); margin-bottom: 4rem; }
@@ -42,6 +44,7 @@
         .game-card p { font-size: 0.9rem; color: var(--subtext); margin: 8px 0 0 0; }
         .play-tag { display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
 
+        /* Game Modal */
         .game-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 3000; display: none; flex-direction: column; }
         .modal-header { height: 50px; background: #111; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
         .btn-group { display: flex; gap: 10px; }
@@ -60,7 +63,7 @@
                 <div class="dropdown" id="menuDropdown">
                     <a href="../">Home</a>
                     <a href="./">Games</a>
-                    <a href="./terms/">Terms</a>
+                    <a href="../terms/">Terms</a>
                 </div>
             </div>
             <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
@@ -127,7 +130,11 @@
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
 
-        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeCheckbox.checked = true; }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeCheckbox.checked = true;
+        }
+
         themeCheckbox.addEventListener('change', () => {
             const theme = themeCheckbox.checked ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', theme);
