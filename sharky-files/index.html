@@ -37,17 +37,32 @@
             background: var(--discord-bg); 
             border-radius: 8px; 
             border: 1px solid var(--border); 
-            overflow-y: auto; 
-            max-height: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            padding-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 600px; /* Fixed height for scrolling */
         }
 
-        main::-webkit-scrollbar { width: 8px; }
-        main::-webkit-scrollbar-track { background: transparent; }
-        main::-webkit-scrollbar-thumb { background: #2b2d31; border-radius: 10px; }
+        .chat-header { 
+            padding: 15px 20px; 
+            border-bottom: 1px solid var(--border); 
+            font-weight: 700; 
+            flex-shrink: 0; 
+        }
 
-        .message { display: flex; padding: 2px 20px; gap: 15px; margin-top: 10px; }
+        .chat-content {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-content::-webkit-scrollbar { width: 8px; }
+        .chat-content::-webkit-scrollbar-track { background: transparent; }
+        .chat-content::-webkit-scrollbar-thumb { background: #2b2d31; border-radius: 10px; }
+
+        .message { display: flex; padding: 2px 20px; gap: 15px; margin-top: 10px; flex-shrink: 0; }
         .pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .pfp.blank { background: #4e5058; }
         .msg-content { display: flex; flex-direction: column; width: 100%; }
@@ -57,9 +72,11 @@
         .text { font-size: 0.95rem; line-height: 1.375; color: var(--text); white-space: pre-wrap; }
         .redacted { background: #000; color: #000; padding: 0 4px; border-radius: 3px; user-select: none; pointer-events: none; }
         [data-theme="dark"] .redacted { background: #fff; color: #fff; }
+        
         .message.compact { margin-top: 0; padding-top: 2px; padding-bottom: 2px; }
         .message.compact .pfp, .message.compact .msg-info { display: none; }
         .message.compact .msg-content { margin-left: 55px; }
+        
         footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
     </style>
 </head>
@@ -80,82 +97,89 @@
         </nav>
     </header>
     <main>
-        <div class="message">
-            <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username" style="color: #3b82f6;">sh8rky</span>
-                    <span class="timestamp">Today at 3:08 AM</span>
-                </div>
-                <div class="text">i <span class="redacted">*****</span> 5 kids today</div>
-            </div>
+        <div class="chat-header">
+            <strong># sh8rky files</strong> <span style="font-weight: 400; color: var(--subtext); font-size: 0.85rem; margin-left: 5px;">| info regarding subject: sharky</span>
         </div>
-        <div class="message">
-            <div class="pfp blank"></div> 
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username"></span>
-                    <span class="timestamp">Today at 3:08 AM</span>
+        <div class="chat-content">
+            <div class="message">
+                <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username" style="color: #3b82f6;">sh8rky</span>
+                        <span class="timestamp">Today at 3:08 AM</span>
+                    </div>
+                    <div class="text">i <span class="redacted">*****</span> 5 kids today</div>
                 </div>
-                <div class="text">CRAZY</div>
             </div>
-        </div>
-        <div class="message compact">
-            <div class="msg-content">
-                <div class="text">why would you do that tf</div>
-            </div>
-        </div>
-        <div class="message">
-            <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username" style="color: #3b82f6;">sh8rky</span>
-                    <span class="timestamp">Today at 3:12 AM</span>
+            <div class="message">
+                <div class="pfp blank"></div> 
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username"></span>
+                        <span class="timestamp">Today at 3:08 AM</span>
+                    </div>
+                    <div class="text">CRAZY</div>
                 </div>
-                <div class="text">because i like to <span class="redacted">****</span> <span class="redacted">*****</span> kids</div>
             </div>
-        </div>
-        <div class="message compact">
-            <div class="msg-content">
-                <div class="text">they all re<span class="redacted">*****</span>d <span class="redacted">*******</span> anyway </div>
-            </div>
-        </div>
-        <div class="message">
-            <div class="pfp blank"></div> 
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username"></span>
-                    <span class="timestamp">Today at 3:15 AM</span>
+            <div class="message compact">
+                <div class="msg-content">
+                    <div class="text">why would you do that tf</div>
                 </div>
-                <div class="text">wtf</div>
             </div>
-        </div>
-        <div class="message">
-            <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username" style="color: #3b82f6;">sh8rky</span>
-                    <span class="timestamp">Today at 4:34 AM</span>
+            <div class="message">
+                <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username" style="color: #3b82f6;">sh8rky</span>
+                        <span class="timestamp">Today at 3:12 AM</span>
+                    </div>
+                    <div class="text">because i like to <span class="redacted">****</span> kids</div>
                 </div>
-                <div class="text">im gooning to your pictures rn</div>
             </div>
-        <div class="message">
-            <div class="pfp blank"></div> 
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username"></span>
-                    <span class="timestamp">Today at 4:37 AM</span>
+            <div class="message compact">
+                <div class="msg-content">
+                    <div class="text">they all re<span class="redacted">****</span> anyway</div>
                 </div>
-                <div class="text">you are wierd dude</div>
             </div>
-        <div class="message">
-            <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
-            <div class="msg-content">
-                <div class="msg-info">
-                    <span class="username" style="color: #3b82f6;">sh8rky</span>
-                    <span class="timestamp">Today at 3:08 AM</span>
+            <div class="message">
+                <div class="pfp blank"></div> 
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username"></span>
+                        <span class="timestamp">Today at 3:15 AM</span>
+                    </div>
+                    <div class="text">wtf</div>
                 </div>
-                <div class="text">stfu n<span class="redacted">*****</span></div>
+            </div>
+            <div class="message">
+                <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username" style="color: #3b82f6;">sh8rky</span>
+                        <span class="timestamp">Today at 4:34 AM</span>
+                    </div>
+                    <div class="text">im gooning to your pictures rn</div>
+                </div>
+            </div>
+            <div class="message">
+                <div class="pfp blank"></div> 
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username"></span>
+                        <span class="timestamp">Today at 4:37 AM</span>
+                    </div>
+                    <div class="text">you are wierd dude</div>
+                </div>
+            </div>
+            <div class="message">
+                <img src="Sharkypfp.png" class="pfp" alt="sh8rky">
+                <div class="msg-content">
+                    <div class="msg-info">
+                        <span class="username" style="color: #3b82f6;">sh8rky</span>
+                        <span class="timestamp">Today at 4:38 AM</span>
+                    </div>
+                    <div class="text">stfu n<span class="redacted">****</span></div>
+                </div>
             </div>
         </div>
     </main>
