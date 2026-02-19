@@ -5,14 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Megamind | Terms</title>
     <style>
-        :root {
-            --bg: #ffffff; --text: #050505; --subtext: #555555;
-            --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #2563eb;
-        }
-        [data-theme="dark"] {
-            --bg: #080808; --text: #ffffff; --subtext: #999999;
-            --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6;
-        }
+        :root { --bg: #ffffff; --text: #050505; --subtext: #555555; --border: #e0e0e0; --toggle-bg: #f5f5f5; --accent: #2563eb; }
+        [data-theme="dark"] { --bg: #080808; --text: #ffffff; --subtext: #999999; --border: #1e1e1e; --toggle-bg: #1a1a1a; --accent: #3b82f6; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; min-height: 100vh; display: flex; flex-direction: column; transition: background 0.4s ease; }
         header { padding: 0 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1000; }
         nav { max-width: 1200px; margin: 0 auto; height: 80px; display: flex; justify-content: space-between; align-items: center; position: relative; }
@@ -24,19 +18,14 @@
         .dropdown a { padding: 12px 16px; text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 600; border-radius: 6px; }
         .dropdown a:hover { background: var(--toggle-bg); color: var(--accent); }
         .brand { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: inherit; }
-        
         .theme-pill { display: flex; align-items: center; background: var(--toggle-bg); border: 1px solid var(--border); padding: 5px; border-radius: 30px; cursor: pointer; width: 60px; }
         .theme-pill input { opacity: 0; width: 0; height: 0; }
         .knob { width: 24px; height: 24px; background: var(--text); border-radius: 50%; transition: 0.4s; }
         input:checked + .knob { transform: translateX(26px); background: var(--accent); }
-
         main { flex: 1; max-width: 800px; margin: 0 auto; padding: 8rem 2rem; }
         h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 2rem; }
-        .tos-card { background: var(--toggle-bg); border: 1px solid var(--border); padding: 2.5rem; border-radius: 24px; line-height: 1.6; }
-        .tos-card p { font-size: 1.1rem; color: var(--text); margin: 0; }
-        .disclaimer { margin-top: 2rem; font-size: 0.8rem; color: var(--subtext); text-transform: uppercase; letter-spacing: 1px; }
-
-        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--subtext); }
+        .tos-card { background: var(--toggle-bg); border: 1px solid var(--border); padding: 2.5rem; border-radius: 24px; }
+        .disclaimer { margin-top: 2rem; font-size: 0.8rem; color: var(--subtext); text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -52,52 +41,27 @@
                     <a href="./">Terms</a>
                 </div>
             </div>
-            <label class="theme-pill">
-                <input type="checkbox" id="themeCheckbox">
-                <div class="knob"></div>
-            </label>
+            <label class="theme-pill"><input type="checkbox" id="themeCheckbox"><div class="knob"></div></label>
         </nav>
     </header>
-
     <main>
         <h1>Terms of Service</h1>
         <div class="tos-card">
-            <p>
-                Megamind is a directory of third-party web applications. 
-                <strong>I am not associated, affiliated, or endorsed by the creators or developers of the games hosted or linked on this website.</strong> 
-                All trademarks and copyrights belong to their respective owners.
-            </p>
+            <p>Megamind is a directory. <strong>I am not associated with the creators of these games.</strong> All trademarks belong to their owners.</p>
             <div class="disclaimer">blz plz plz dont sue me</div>
         </div>
     </main>
-
-    <footer>2026, ALL RIGHTS RESERVED</footer>
-
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
         const themeCheckbox = document.getElementById('themeCheckbox');
-
-        // Dropdown Logic
-        menuBtn.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            dropdown.classList.toggle('active'); 
-        });
+        menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
-        
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeCheckbox.checked = true;
-        }
-
+        if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeCheckbox.checked = true; }
         themeCheckbox.addEventListener('change', () => {
-            if (themeCheckbox.checked) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            }
+            const theme = themeCheckbox.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
         });
     </script>
 </body>
