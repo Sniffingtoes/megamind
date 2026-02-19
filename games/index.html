@@ -31,9 +31,13 @@
         .game-card h3 { margin: 0; font-size: 1.4rem; font-weight: 800; }
         .game-card p { font-size: 0.9rem; color: var(--subtext); margin: 8px 0 0 0; }
         .play-tag { display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        /* Modal Styles */
         .game-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 3000; display: none; flex-direction: column; }
         .modal-header { height: 50px; background: #111; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
-        .modal-btn { color: #fff; background: #222; border: 1px solid #444; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; font-weight: 800; }
+        .modal-controls { display: flex; gap: 10px; }
+        .modal-btn { color: #fff; background: #222; border: 1px solid #444; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; font-weight: 800; transition: 0.2s; }
+        .modal-btn:hover { background: #333; }
         #game-frame { border: none; flex-grow: 1; width: 100%; height: 100%; background: #fff; }
     </style>
 </head>
@@ -63,29 +67,60 @@
             <div class="game-card" onclick="openGame('https://nebez.github.io/floppybird/')"><h3>Flappy Bird</h3><p>Precision flight.</p><span class="play-tag">LAUNCH &rarr;</span></div>
         </div>
     </main>
+
     <div class="game-modal" id="gameModal">
         <div class="modal-header">
             <span style="color: #fff; font-size: 0.8rem; font-weight: 800;">ACTIVE_SESSION</span>
-            <button class="modal-btn" onclick="closeGame()" style="background: #b91c1c;">EXIT</button>
+            <div class="modal-controls">
+                <button class="modal-btn" onclick="toggleFullscreen()">FULLSCREEN</button>
+                <button class="modal-btn" onclick="closeGame()" style="background: #b91c1c; border-color: #991b1b;">EXIT</button>
+            </div>
         </div>
-        <iframe id="game-frame" src=""></iframe>
+        <iframe id="game-frame" src="" allowfullscreen></iframe>
     </div>
+
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const dropdown = document.getElementById('menuDropdown');
         const themeCheckbox = document.getElementById('themeCheckbox');
         const gameModal = document.getElementById('gameModal');
         const gameFrame = document.getElementById('game-frame');
+
         menuBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('active'); });
         window.addEventListener('click', () => dropdown.classList.remove('active'));
+
         if (localStorage.getItem('theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); themeCheckbox.checked = true; }
+        
         themeCheckbox.addEventListener('change', () => {
             const theme = themeCheckbox.checked ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
         });
-        function openGame(url) { gameFrame.src = url; gameModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeGame() { gameModal.style.display = 'none'; gameFrame.src = ""; document.body.style.overflow = 'auto'; }
+
+        function openGame(url) { 
+            gameFrame.src = url; 
+            gameModal.style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeGame() { 
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+            gameModal.style.display = 'none'; 
+            gameFrame.src = ""; 
+            document.body.style.overflow = 'auto'; 
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                gameModal.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
     </script>
 </body>
 </html>
