@@ -11,7 +11,8 @@
             --subtext: #666666;
             --border: #e5e5e5;
             --toggle-bg: #f0f0f0;
-            --accent: #000000;
+            --accent: #6366f1;
+            --card-bg: #ffffff;
         }
 
         [data-theme="dark"] {
@@ -20,18 +21,19 @@
             --subtext: #a1a1a1;
             --border: #1a1a1a;
             --toggle-bg: #1a1a1a;
-            --accent: #ffffff;
+            --accent: #818cf8;
+            --card-bg: #0d0d0d;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
             background: var(--bg);
             color: var(--text);
             margin: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background 0.5s ease;
+            transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-x: hidden;
         }
 
@@ -40,7 +42,8 @@
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            background: var(--bg);
+            background: rgba(var(--bg), 0.8);
+            backdrop-filter: blur(10px);
             z-index: 1000;
         }
 
@@ -50,54 +53,52 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 64px;
+            height: 70px;
         }
 
         .menu {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .menu-item {
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--subtext);
             cursor: pointer;
-            padding: 0.5rem 0;
-            transition: color 0.3s ease;
-            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .menu-item:hover {
+            color: var(--accent);
+            background: var(--toggle-bg);
         }
 
         .menu-item.active {
-            color: var(--text);
+            color: var(--accent);
+            background: var(--toggle-bg);
         }
 
         .menu-toggle {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
         }
 
         .menu-toggle span {
-            width: 20px;
+            width: 22px;
             height: 2px;
             background: var(--text);
             transition: 0.3s;
         }
 
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
         .switch {
             position: relative;
-            width: 38px;
-            height: 20px;
+            width: 44px;
+            height: 24px;
         }
 
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -108,88 +109,113 @@
             inset: 0;
             background-color: var(--toggle-bg);
             transition: 0.4s;
-            border-radius: 20px;
+            border-radius: 30px;
             border: 1px solid var(--border);
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px;
-            width: 14px;
-            left: 2px;
-            bottom: 2px;
-            background-color: var(--text);
-            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--accent);
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             border-radius: 50%;
         }
 
         input:checked + .slider:before {
-            transform: translateX(18px);
+            transform: translateX(20px);
         }
 
         main {
             flex: 1;
-            position: relative;
             max-width: 800px;
             margin: 0 auto;
             width: 100%;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             box-sizing: border-box;
         }
 
         .tab-content {
             display: none;
             opacity: 0;
-            transform: translateX(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .tab-content.active {
             display: block;
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .card {
-            background: var(--toggle-bg);
+            background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
+            border-radius: 16px;
+            padding: 2.5rem;
             margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: var(--accent);
         }
 
         @media (max-width: 768px) {
             .menu-toggle { display: flex; }
-            
             .menu {
                 position: fixed;
-                top: 0;
-                right: -100%;
-                width: 250px;
-                height: 100vh;
+                top: 71px;
+                left: 0;
+                width: 100%;
+                height: 0;
                 background: var(--bg);
                 flex-direction: column;
-                padding: 80px 2rem;
-                transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-                border-left: 1px solid var(--border);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+                overflow: hidden;
+                transition: 0.4s ease;
+                border-bottom: 1px solid var(--border);
+                gap: 0;
+                padding: 0;
             }
-
-            .menu.open { right: 0; }
-            
-            .menu-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-            .menu-toggle.open span:nth-child(2) { opacity: 0; }
-            .menu-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+            .menu.open { height: 200px; padding: 1rem 0; }
+            .menu-item { border-radius: 0; width: 100%; text-align: center; }
         }
 
         footer {
-            padding: 2rem;
-            font-size: 0.7rem;
+            padding: 3rem;
+            font-size: 0.9rem;
+            font-weight: 500;
             color: var(--subtext);
-            border-top: 1px solid var(--border);
             text-align: center;
-            letter-spacing: 0.1em;
+            border-top: 1px solid var(--border);
+        }
+
+        .heart {
+            color: #ef4444;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -202,12 +228,10 @@
                 <span></span>
                 <span></span>
             </div>
-
             <div class="menu" id="navMenu">
-                <div class="menu-item active" data-tab="home">INDEX</div>
-                <div class="menu-item" data-tab="test">LABS</div>
+                <div class="menu-item active" data-tab="home">Index</div>
+                <div class="menu-item" data-tab="test">Labs</div>
             </div>
-
             <div class="controls">
                 <label class="switch">
                     <input type="checkbox" id="themeCheckbox">
@@ -219,21 +243,21 @@
 
     <main>
         <section id="home" class="tab-content active">
-            <h1>Project Root</h1>
-            <p>Environment optimized for local state verification.</p>
+            <h1>Hello.</h1>
+            <p>Welcome to a cleaner, faster, and slightly more colorful testing environment.</p>
         </section>
 
         <section id="test" class="tab-content">
-            <h1>Diagnostic Labs</h1>
+            <h1>The Lab</h1>
             <div class="card">
-                <strong>LATENCY:</strong> <span id="latency">--</span>ms<br>
-                <strong>KERNEL:</strong> 1.0.9-B
+                <p>System diagnostic active. Everything is looking good.</p>
+                <strong>Network Latency:</strong> <span id="latency">--</span>ms
             </div>
         </section>
     </main>
 
     <footer>
-        BUILD_REF: 2026.FEB.19
+        2026, All Rights Reserved &bull; Made with <span class="heart">&lt;3</span>
     </footer>
 
     <script>
@@ -243,40 +267,35 @@
         const contents = document.querySelectorAll('.tab-content');
 
         mobileToggle.addEventListener('click', () => {
-            mobileToggle.classList.toggle('open');
             navMenu.classList.toggle('open');
         });
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const targetId = tab.getAttribute('data-tab');
-                const targetContent = document.getElementById(targetId);
-
-                if (targetContent.classList.contains('active')) return;
+                if (document.getElementById(targetId).classList.contains('active')) return;
 
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                
                 navMenu.classList.remove('open');
-                mobileToggle.classList.remove('open');
 
                 contents.forEach(c => {
                     c.style.opacity = '0';
-                    c.style.transform = 'translateX(-10px)';
+                    c.style.transform = 'translateY(10px)';
                     setTimeout(() => {
                         c.classList.remove('active');
                         if (c.id === targetId) {
                             c.classList.add('active');
                             setTimeout(() => {
                                 c.style.opacity = '1';
-                                c.style.transform = 'translateX(0)';
+                                c.style.transform = 'translateY(0)';
                             }, 50);
                         }
-                    }, 200);
+                    }, 300);
                 });
 
                 if(targetId === 'test') {
-                    document.getElementById('latency').innerText = Math.floor(Math.random() * 15) + 4;
+                    document.getElementById('latency').innerText = Math.floor(Math.random() * 12) + 2;
                 }
             });
         });
